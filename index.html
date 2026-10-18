@@ -63,6 +63,16 @@ textarea{resize:none;border:1px solid #555;padding:8px;font-size:14px}
 .cp .sc{margin-top:.9em}
 .cp .bl{height:.7em}
 .sp{width:28px;display:flex;align-items:center;justify-content:center;color:#8a8a8a;font-size:15px}
+
+.mi{width:24px;height:36px;margin-left:2px;color:#ff9a1f;display:flex;align-items:center;justify-content:center;flex:none}
+.mi svg{width:15px;height:15px}
+.fb{padding:0 12px;height:46px;color:#8f8f8f;font-size:13px;letter-spacing:.5px}
+#player .fb{color:#8a8a8a}
+.fb.off{text-decoration:line-through}
+.gh{color:#8a8a8a;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;padding:14px 4px 4px;flex:none}
+.row .pd{display:flex;align-items:center;justify-content:center;color:#8a8a8a}
+.row .pd svg{width:15px;height:15px}
+.cp.nos .sl{display:none}
 </style></head><body>
 <div class="scr" id="main"></div><div class="scr" id="presets"></div><div class="scr" id="report"></div><div class="scr" id="detail"></div><div class="scr" id="cifras"></div><div class="scr" id="player"></div>
 <script>
@@ -74,7 +84,7 @@ const MS=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto'
 const key=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
 const hm=d=>pad(d.getHours())+':'+pad(d.getMinutes());
 const h=(t,c,x,...k)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;k.forEach(a=>a&&e.append(a));return e};
-const P={drop:'M12 3c3.5 4.5 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 2.5-6.5 6-11z',rep:'M5 20V10M12 20V4M19 20v-7',list:'M4 7h16M4 12h16M4 17h16',save:'M12 4v11m-5-5 5 5 5-5M5 20h14',back:'M15 5l-7 7 7 7',edit:'M4 20l4-1 11-11-3-3L5 16l-1 4z',trash:'M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13',pause:'M8 5v14M16 5v14',play:'M7 4l12 8-12 8z',plus:'M12 5v14M5 12h14',minus:'M5 12h14'};
+const P={drop:'M12 3c3.5 4.5 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 2.5-6.5 6-11z',rep:'M5 20V10M12 20V4M19 20v-7',list:'M4 7h16M4 12h16M4 17h16',save:'M12 4v11m-5-5 5 5 5-5M5 20h14',back:'M15 5l-7 7 7 7',edit:'M4 20l4-1 11-11-3-3L5 16l-1 4z',trash:'M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13',pause:'M8 5v14M16 5v14',music:'M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM21 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z',play:'M7 4l12 8-12 8z',plus:'M12 5v14M5 12h14',minus:'M5 12h14'};
 const ic=p=>'<svg viewBox="0 0 24 24"><path d="'+p+'"/></svg>';
 const ib=(p,f)=>{const b=h('button','ib');b.innerHTML=ic(p);b.onclick=f;return b};
 const top=(l,...r)=>h('div','bar',null,l,h('div',null,null,...r));
@@ -88,10 +98,11 @@ const SEED={"1":[["04:00","Acordar, Arrumar a cama e Agradecer"],["04:20","Corri
 function mig(){if(S.seed==2)return;S.presets={};for(const i in SEED)S.presets[i]=SEED[i].map(a=>({t:a[0],x:a[1]}));S.seed=2;const d=S.days[key(new Date())];if(d&&!d.touched&&!d.closed)d.tasks=S.presets[new Date().getDay()].map(mk)}
 const SEEDC=[["Por causa dele - Jessé Aguiar","D\nPor mim eu parava agora\n\nO cansaço me atingiu\n          A\nE eu desacelerei\n\nO ânimo em mim sumiu\n        Em  D\nE eu parei\n   G\nParei para respirar um pouco\n         D\nE não desistir\n             A\nMas mesmo assim\n\n                    D\nPor mim eu parava agora\n\nMeu coração entrou em alerta\n        A\nFicou exausto\n\nEu sinto um medo que me aperta\n                 Em  D\nE me deixa assustado\n     G                             D\nPor mim eu já teria há tempos parado\n\n[Pré-Refrão]\n\nBm                              G\n   Mas toda vez que eu tô cansado\n\nJesus me abastece\n\nE me deixa claro\nD\n  Que Ele não quer me ver prostrado\nA\nÉ difícil, cansativo\n                     Em\nMas Ele está lado a lado\n                        D    G\nMe enviando qualquer recurso\n\nMe aliviando\n\nE me deixando mais seguro\nBm\n   E toda vez que eu quero parar\n    A\nEle aparece pra me fazer avançar\n     Em                   D\nPor mim eu já teria desistido\n                 G\nMas por Ele eu chego lá\n\n[Refrão]\n\n                D\nFoi por causa d'Ele\n                    A\nQue eu ainda não parei\n\nNem desisti\n                Bm\nFoi por causa d'Ele\n                   G\nQue eu levantei e decidi seguir\n                D\nE é por causa d'Ele\n                   A\nQue eu ainda continuo a lutar\n                Em\nPor causa de Jesus\n                  D\nQue sempre me conduz\n                G\nEu sei que eu chego lá\n\nPorque quando eu não der conta\n           Em  D  G\nEle vai me ajudar\n\n[Solo] Em  D  G\n\n[Pré-Refrão]\n\nBm                              G\n   Mas toda vez que eu tô cansado\n\nJesus me abastece\n\nE me deixa claro\nD\n  Que Ele não quer me ver prostrado\nA\nÉ difícil, cansativo\n\nMas Ele está lado a lado\nEm                         D    G\n   Me enviando qualquer recurso\n\nMe aliviando\n\nE me deixando mais seguro\nBm\n   E toda vez que eu quero parar\n    A\nEle aparece pra me fazer avançar\n     Em                   D\nPor mim eu já teria desistido\n                 G\nMas por Ele eu chego lá\n\n[Refrão]\n\n                D\nFoi por causa d'Ele\n                    A\nQue eu ainda não parei\n\nNem desisti\n                Bm\nFoi por causa d'Ele\n\nQue eu levantei\n   G\nE decidi seguir\n                D\nE é por causa d'Ele\n                   A\nQue eu ainda continuo a lutar\n                Em\nPor causa de Jesus\n                  D\nQue sempre me conduz\n                G\nEu sei que eu chego lá\n\nPorque quando eu não der conta\n     D\nEle vai me ajudar\n\n( A  Em  D  G )\n\n[Ponte]\n\n                D\nFoi por causa d'Ele\n\nQue eu não parei\n                A\nFoi por causa d'Ele\n\nQue eu não desisti\n              Em\nÉ por causa d'Ele\n\nQue eu estou aqui\n            G\nDizendo que é por causa d'Ele\n\nÉ por causa d'Ele\n\n              D\nÉ por causa d'Ele\n\nQue eu não parei\n              A\nÉ por causa d'Ele\n\nQue eu não desisti\n              Em\nÉ por causa d'Ele\n\nQue estou aqui\n            G\nDizendo que é por causa d'Ele\n                  A\nQue é por causa d'Ele\n\n[Refrão]\n\n                D\nFoi por causa d'Ele\n                    A\nQue eu ainda não parei\n\nNem desisti\n                Bm\nFoi por causa d'Ele\n\nQue eu levantei\n   G\nE decidi seguir\n                D\nE é por causa d'Ele\n        A\nQue eu ainda continuo a lutar\n                Em\nPor causa de Jesus\n                  D\nQue sempre me conduz\n                G\nEu sei que eu chego lá\n\nPorque quando eu não der conta\n     D\nEle vai me ajudar\n\nFoi por causa d'Ele\n\nQue eu não parei\n                A\nFoi por causa d'Ele\n\nQue eu não desisti\n              Em\nÉ por causa d'Ele\n              D\nQue eu estou aqui\n            G\nDizendo que é por causa d'Ele\n\nÉ por causa d'Ele\n"],["É tudo sobre você - Morada","[Intro] Am  C  Am  C\n\n[Dedilhado - Intro]\n\nParte 1 de 2\n   Am              C\nE|---------0---------------0----------------| \nB|-----1-------1-------1-------1------------| \nG|---2---2---2---2---0---0---0---0----------| \nD|------------------------------------------| \nA|-0---------------3------------------------| \nE|------------------------------------------| \n\nParte 2 de 2\n   Am              C\nE|---------0---------------0----------------| \nB|-----1-------1-------1-------1------------| \nG|---2---2---2---2---0---0---0---0----------| \nD|------------------------------------------| \nA|-0---------------3------------------------| \nE|------------------------------------------|\n\n\nAm                           C\n   A porta da casa mais simples\n\nQue o anjo da morte não entra\nAm\n   A estrada que corre pro mar\n   C                            G  Em\nO vento que abre o caminho é você\n     F7M\nÉ você\n\nAm\n   A nuvem que aponta o destino\nC\n  É a mesma que cobre o passado\nAm\n   O pão que sacia a fome\n   C                             G  Em\nA rocha que mata minha sede é você\n     F7M\nÉ você\n\n[Pré-Refrão]\n\nF7M/C\n      Mais perto do monte\nG\n  Mais perto da face\nAm\n   Me espanto\n            C   G/B  Am G\nCom o peso da Tua  glória\nF7M/C\n      Mais perto da glória\nG\n  É mais perto da morte\nAm                   G/B\n   O medo quer me parar\n\n[Refrão]\n\n                 F7M/C\nEntão me tira o medo\n\nQue me faz dizer Moisés\n   G     Am\nSuba em meu lugar\n    Em\nMe faz entender\n    F7M/C\nQue a tempestade é você\n               G  Am\nChuva forte é vo_cê\n                 Em\nVento forte é você\n\nE o que me faz tremer as pernas\nF7M/C\nA porta aberta é você\n\n                 G  Am\nMas a fechada é vo_cê\n                Em\nÉ tudo sobre você\n\nEu também vou subir\n\n[Pré-Refrão]\n\nF7M/C\n      Mais perto do monte\nG\n  Mais perto da face\nAm\n   Me espanto\n            C   G/B  Am  G\nCom o peso da Tua  glóri_a\nF7M/C\n      Mais perto da glória\nG\n  É mais perto da morte\nAm                   G/B\n   O medo quer me parar\n\n[Refrão]\n\n                 F7M/C\nEntão me tira o medo\n\nQue me faz dizer Moisés\n   G     Am\nSuba em meu lugar\n    Em\nMe faz entender\n    F7M/C\nQue a tempestade é você\n               G  Am\nChuva forte é vo_cê\n                 Em\nVento forte é você\n\nE o que me faz tremer as pernas\n\nF7M/C\nA porta aberta é você\n                 G  Am\nMas a fechada é vo_cê\n                Em\nÉ tudo sobre você\n           F7M/C\nMe tira o medo\n\nQue me faz dizer Moisés\n   G     Am\nSuba em meu lugar\n    Em\nMe faz entender\n    F7M/C\nQue a tempestade é você\n               G  Am\nChuva forte é vo_cê\n                 Em\nVento forte é você\n\nE o que me faz tremer as pernas\n\nF7M/C\nA porta aberta é você\n                 G  Am\nMas a fechada é vo_cê\n                Em\nÉ tudo sobre você\n\nEu também vou subir\n\n[Ponte]\n\nF7M/C\n      Eu vou subir o monte\nG\n  Que muitos desistiram\nAm\n   E vou ficar lá\nEm\n   Até te encontrar\nF7M/C\n      Eu vou entrar na casa\nG\n  E vou fazer morada\nAm\n   E vou ficar lá\nEm\n   Até te encontrar\n\nF7M/C\n      Eu vou subir o monte\nG\n  Que muitos desistiram\nAm\n   E vou ficar lá\nEm\n   Até te encontrar\nF7M/C\n      Eu vou entrar na casa\nG\n  E vou fazer morada\nAm\n   E vou ficar lá\nEm\n   Até te encontrar\n\n[Pré-Refrão]\n\nF7M/C\n      Mais perto do monte\nG\n  Mais perto da face\nAm\n   Me espanto\n            C   G/B  Am  G\nCom o peso da Tua  glóri_a\nF7M/C\n      Mais perto da glória\nG\n  É mais perto da morte\nAm                   G/B\n   O medo quer me parar\n\n[Refrão]\n\n                 F7M/C\nEntão me tira o medo\n\nQue me faz dizer Moisés\n   G     Am\nSuba em meu lugar\n    Em\nMe faz entender\n    F7M/C\nQue a tempestade é você\n               G  Am\nChuva forte é vo_cê\n                 Em\nVento forte é você\n\nE o que me faz tremer as pernas\n\nF7M/C\nA porta aberta é você\n                 G  Am\nMas a fechada é vo_cê\n                Em\nÉ tudo sobre você\n\nF7M/C\nA tempestade é você\n               G  Am\nChuva forte é vo_cê\n                 Em\nVento forte é você\n\nE o que me faz tremer as pernas\n\nF7M/C\nA porta aberta é você\n                 G  Am\nMas a fechada é vo_cê\n                Em\nÉ tudo sobre você\n                    F7M/C\nEu também vou subir\n\nEu também vou subir\n          Am  D\nEu vou subir\n\n( F7M/C  Am  D )\n( F7M/C  G  F7M/C  G  F7M/C )\n\n[Primeira parte]\n\nAm\n   A nuvem que aponta o destino\nC\n  É a mesma que cobre o passado\nAm\n   O pão que sacia a fome\n   C                             G  Em\nA rocha que mata minha sede é você\n     F7M\nÉ você\n"]];
 function mig2(){if(!S.cifras)S.cifras=SEEDC.map((a,i)=>({id:'s'+i,title:a[0],text:a[1]}))}
+function mig3(){S.cifras.forEach(c=>{if(c.artist===undefined){const q=sp(c.title);c.title=q.title;c.artist=q.artist}if(c.genre===undefined)c.genre=/^s\d$/.test(c.id)?'Gospel':''})}
 function load(){
- for(const k of [K,B]){try{const j=JSON.parse(localStorage.getItem(k));if(j&&j.days&&j.presets){S=j;mig();mig2();return}}catch(e){}}
+ for(const k of [K,B]){try{const j=JSON.parse(localStorage.getItem(k));if(j&&j.days&&j.presets){S=j;mig();mig2();mig3();return}}catch(e){}}
  S={presets:{},days:{},logs:{}};
- mig();mig2();
+ mig();mig2();mig3();
 }
 function save(){const j=JSON.stringify(S);try{localStorage.setItem(K,j);localStorage.setItem(B,j)}catch(e){}}
 const mk=p=>({t:p.t,x:p.x,s:0,n:''});
@@ -124,10 +135,11 @@ function bind(el,onTap,onSwipe){
 
 function rowEl(k,d,t,cb,live){
  const v=stv(d,k,t),r=h('div','row'+(v==1?' ok':v<0?' no':'')),ds=h('div','ds',null,h('span',null,t.x));
- r.append(h('div','tm',t.t),ds);
+ const tm=h('div','tm',t.t);r.append(tm,ds);
+ if(live&&stack[stack.length-1]=='main'&&/viol[aã]o/i.test(t.x)){const mb=h('button','mi');mb.innerHTML=ic(P.music);mb.onpointerdown=mb.onpointerup=e=>e.stopPropagation();mb.onclick=()=>nav('cifras');tm.append(mb)}
  if(!live){if(t.n)ds.firstChild.append(h('span','nn',t.n));return r}
  if(t.n)ds.append(h('span','nt','✎'));
- bind(r,()=>/viol[aã]o/i.test(t.x)&&stack[stack.length-1]=='main'?(cur={k,t,cb},nav('cifras')):bubble(k,t,false,cb),dir=>{t.s=t.s===dir?(dir<0&&d.closed?-1:0):dir;if(t.s==1)t.at=hm(new Date())+':'+pad(new Date().getSeconds());else delete t.at;d.touched=1;cb()});
+ bind(r,()=>bubble(k,t,false,cb),dir=>{t.s=t.s===dir?(dir<0&&d.closed?-1:0):dir;if(t.s==1)t.at=hm(new Date())+':'+pad(new Date().getSeconds());else delete t.at;d.touched=1;cb()});
  return r;
 }
 function addRow(k,cb){const a=h('div','row add',null,h('div','tm','+'),h('div','ds','Adicionar'));a.onclick=()=>bubble(k,{t:hm(new Date()),x:'',n:'',s:0},true,cb);return a}
@@ -217,30 +229,66 @@ R.detail=()=>{
 const CH=/^[A-G][#b]?(?:m|M|maj|min|dim|aug|sus|add|º|°|\+|-|\d|\(\w+\)|\/[A-G][#b]?)*$/;
 const isC=t=>{t=t.replace(/^\(+|\)+$/g,'');return t===''||CH.test(t)};
 const E=t=>t.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const FM=['Música','Cantor','Gênero'];let col={};
+const cmp=(a,b)=>a.localeCompare(b,'pt',{sensitivity:'base'});
+function sp(n){n=n.replace(/\.txt$/i,'').replace(/_/g,' ').trim();const m=n.match(/^(.*\S)\s+-\s+(.+)$/);return m?{title:m[1],artist:m[2]}:{title:n,artist:''}}
 function fmt(tx){
- const pre=h('div','cp');let bl=1;
+ const pre=h('div','cp'),Q=[];let bl=1;
  tx.replace(/\r/g,'').replace(/\t/g,'    ').split('\n').forEach(r=>{
   r=r.replace(/\s+$/,'');
-  if(!r.trim()){if(!bl)pre.append(h('div','bl'));bl=1;return}
-  bl=0;const d=h('div'),tk=r.trim().split(/\s+/),m=r.match(/^(\s*\[[^\]]+\])(.*)$/);
-  if(m){const rest=m[2];
+  if(!r.trim()){if(!bl){const d=h('div','bl');pre.append(d);Q.push({d,c:'bl',r:'',l:''})}bl=1;return}
+  bl=0;const d=h('div'),tk=r.trim().split(/\s+/),m=r.match(/^(\s*\[[^\]]+\])(.*)$/);let c;
+  if(m){c='lb';const rest=m[2];
    d.innerHTML='<i>'+E(m[1])+'</i>'+(rest.trim()&&rest.trim().split(/\s+/).every(isC)?'<u>'+E(rest)+'</u>':E(rest));
    if(!rest.trim())d.className='sc'}
-  else if(/^[A-Ga-g]?\|[-\dhpbrx\/\\~|\s()]{6,}$/.test(r.trim())){d.className='tb';d.innerHTML=E(r).replace(/\d+/g,'<u>$&</u>')}
-  else if(tk.every(isC)&&tk.some(t=>CH.test(t.replace(/^\(+|\)+$/g,'')))){d.className='ch';d.textContent=r}
-  else{d.className='ly';d.textContent=r.replace(/_/g,'-')}
-  pre.append(d)});
+  else if(/^[A-Ga-g]?\|[-\dhpbrx\/\\~|\s()]{6,}$/.test(r.trim())){c='tb';d.className='tb';d.innerHTML=E(r).replace(/\d+/g,'<u>$&</u>')}
+  else if(tk.every(isC)&&tk.some(t=>CH.test(t.replace(/^\(+|\)+$/g,'')))){c='ch';d.className='ch';d.textContent=r}
+  else{c='ly';d.className='ly';d.textContent=r.replace(/_/g,'-')}
+  pre.append(d);Q.push({d,c,r,l:m?m[1]:''})});
+ const pa=x=>x.c=='ly'&&/^\s*parte\b/i.test(x.r),n=Q.length;
+ Q.forEach((x,i)=>{
+  if(x.c!='lb'||!/solo|dedilhado|instrumental/i.test(x.l))return;
+  let last=i,j=i+1;
+  while(j<n){const y=Q[j];
+   if(y.c=='bl'){j++;continue}
+   if(y.c=='tb'||pa(y)){last=j;j++;continue}
+   if(y.c=='ch'){let k=j+1;while(k<n&&Q[k].c=='bl')k++;
+    if(k<n&&Q[k].c=='ly'&&!pa(Q[k]))break;last=j;j++;continue}
+   break}
+  if(Q[last+1]&&Q[last+1].c=='bl')last++;
+  for(let q=i;q<=last;q++)Q[q].d.classList.add('sl')});
  return pre}
 
+function meta(c,done){
+ const ov=h('div','ov'),bx=h('div','bx');
+ const mk=(ph,v)=>{const i=h('input','bn');i.placeholder=ph;i.value=v||'';i.autocomplete='off';return i};
+ const a=mk('Música',c.title),b=mk('Cantor',c.artist),g=mk('Gênero',c.genre),dl=h('datalist');
+ dl.id='gl';g.setAttribute('list','gl');
+ [...new Set(S.cifras.map(z=>z.genre).filter(Boolean))].forEach(x=>{const o=h('option');o.value=x;dl.append(o)});
+ const fin=()=>{if(a.value.trim())c.title=a.value.trim();c.artist=b.value.trim();c.genre=g.value.trim();save();ov.remove();done()};
+ const ok=h('button','bk','Concluir');ok.onclick=fin;ov.onpointerdown=e=>{if(e.target==ov)fin()};
+ bx.append(a,b,g,dl,ok);ov.append(bx);document.body.append(ov);
+}
+
 R.cifras=()=>{
- const s=$('cifras');s.textContent='';
+ const s=$('cifras'),md=S.cm||0;s.textContent='';
  const fi=h('input');fi.type='file';fi.accept='.txt,text/plain';fi.multiple=true;fi.hidden=true;
- fi.onchange=async()=>{for(const f of fi.files)S.cifras.push({id:Date.now()+Math.random().toString(36).slice(2,6),title:f.name.replace(/\.txt$/i,'').replace(/_/g,' '),text:(await f.text()).replace(/^\uFEFF/,'')});save();R.cifras()};
- s.append(top(ib(P.back,()=>history.back()),ib(P.edit,()=>cur&&bubble(cur.k,cur.t,false,cur.cb))),fi);
- const L=h('div','list');
- S.cifras.slice().sort((a,b)=>a.title.localeCompare(b.title,'pt')).forEach(c=>{
-  const x=h('button','pd','×');x.onclick=e=>{e.stopPropagation();if(confirm('Excluir cifra?')){S.cifras=S.cifras.filter(z=>z!==c);save();R.cifras()}};
-  const r=h('div','row',null,h('div','ds',c.title),x);r.onclick=()=>{cid=c.id;nav('player')};L.append(r)});
+ fi.onchange=async()=>{for(const f of fi.files){const q=sp(f.name);S.cifras.push({id:Date.now()+Math.random().toString(36).slice(2,6),title:q.title,artist:q.artist,genre:'',text:(await f.text()).replace(/^\uFEFF/,'')})}save();R.cifras()};
+ const fb=h('button','fb',FM[md]);fb.onclick=()=>{S.cm=(md+1)%3;save();R.cifras()};
+ s.append(top(ib(P.back,()=>history.back()),fb),fi);
+ const L=h('div','list'),all=S.cifras.slice().sort((a,b)=>cmp(a.title,b.title));
+ const row=c=>{
+  const e=h('button','pd'),x=h('button','pd','×');e.innerHTML=ic(P.edit);
+  e.onclick=ev=>{ev.stopPropagation();meta(c,R.cifras)};
+  x.onclick=ev=>{ev.stopPropagation();if(confirm('Excluir cifra?')){S.cifras=S.cifras.filter(z=>z!==c);save();R.cifras()}};
+  const r=h('div','row',null,h('div','ds',c.title),e,x);r.onclick=()=>{cid=c.id;nav('player')};return r};
+ if(!md)all.forEach(c=>L.append(row(c)));
+ else{const g={},ky=md==1?'artist':'genre';
+  all.forEach(c=>{const n=c[ky]||'';(g[n]=g[n]||[]).push(c)});
+  Object.keys(g).sort((a,b)=>!a?1:!b?-1:cmp(a,b)).forEach(n=>{
+   const k=md+'|'+n,hd=h('div','gh',(col[k]?'+ ':'')+(n||(md==1?'Sem cantor':'Sem gênero')));
+   hd.onclick=()=>{col[k]=!col[k];R.cifras()};L.append(hd);
+   if(!col[k])g[n].forEach(c=>L.append(row(c)))})}
  const ad=h('div','row add',null,h('div','tm','+'),h('div','ds','Adicionar cifra'));ad.onclick=()=>fi.click();
  L.append(ad);s.append(L);
 };
@@ -250,13 +298,17 @@ R.player=()=>{
  const c=S.cifras.find(a=>a.id==cid),s=$('player');s.textContent='';
  if(!c){history.back();return}
  let lv=S.cs||5,run=1,pos=0,last=0,t0=0,touch=0,hold=0,raf=0,wl=null;
- const sp=h('span','sp',String(lv)),pp=ib(P.pause,()=>tg());
+ const sn=h('span','sp',String(lv)),pp=ib(P.pause,()=>tg());
  const tg=()=>{run=run?0:1;pp.innerHTML=ic(run?P.pause:P.play)};
- const set=d=>{lv=Math.max(1,Math.min(15,lv+d));S.cs=lv;sp.textContent=lv;save()};
- s.append(top(ib(P.back,()=>history.back()),ib(P.minus,()=>set(-1)),sp,ib(P.plus,()=>set(1)),pp));
- const box=h('div','cb'),pre=fmt(c.text);box.append(pre);s.append(box);
+ const set=d=>{lv=Math.max(1,Math.min(15,lv+d));S.cs=lv;sn.textContent=lv;save()};
+ const box=h('div','cb'),pre=fmt(c.text);box.append(pre);
+ let sb=null;
+ if(pre.querySelector('.sl')){sb=h('button','fb','solo');sb.onclick=()=>{S.hs=S.hs?0:1;save();ap()}}
+ const ap=()=>{pre.classList.toggle('nos',!!S.hs);if(sb)sb.classList.toggle('off',!!S.hs)};
+ s.append(top(ib(P.back,()=>history.back()),sb,ib(P.minus,()=>set(-1)),sn,ib(P.plus,()=>set(1)),pp),box);
  let f=18;pre.style.fontSize=f+'px';
  while(f>9&&pre.offsetWidth>box.clientWidth-24){f-=.5;pre.style.fontSize=f+'px'}
+ ap();
  box.onclick=tg;
  box.addEventListener('touchstart',()=>{touch=1},{passive:true});
  const te=()=>{touch=0;hold=performance.now()+700};
