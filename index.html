@@ -73,8 +73,15 @@ textarea{resize:none;border:1px solid #555;padding:8px;font-size:14px}
 .row .pd{display:flex;align-items:center;justify-content:center;color:#8a8a8a}
 .row .pd svg{width:15px;height:15px}
 .cp.nos .sl{display:none}
-</style></head><body>
-<div class="scr" id="main"></div><div class="scr" id="presets"></div><div class="scr" id="report"></div><div class="scr" id="detail"></div><div class="scr" id="cifras"></div><div class="scr" id="player"></div>
+.bg{display:flex;align-items:center;gap:6px}.bg .mi{width:34px}.bg .mi svg{width:18px;height:18px}.row.sx{margin-left:16px}.sx .ds{min-height:42px;padding:4px 10px}
+.ex{border:2px solid #555;background:#333;padding:6px 8px;display:flex;flex-direction:column;gap:6px;flex:none}
+.fh{display:flex;align-items:center;gap:4px}.fh input{flex:1;min-width:0}
+.fh .pd{width:34px;height:34px;color:#8a8a8a;font-size:22px;flex:none}
+.ex .bn{font-size:16px}
+.fx{display:flex;gap:6px}.fx input{flex:1;min-width:0;text-align:center;border:1px solid #555;padding:7px 2px;font-size:14px}
+.tn{font-size:18px;margin-bottom:8px;flex:none}
+.ib.sm{width:40px;height:38px}.ib:disabled{opacity:.3}.sx .ds>div{display:flex}.tmv{font-size:20px;letter-spacing:1px}</style></head><body>
+<div class="scr" id="main"></div><div class="scr" id="presets"></div><div class="scr" id="report"></div><div class="scr" id="detail"></div><div class="scr" id="cifras"></div><div class="scr" id="player"></div><div class="scr" id="treinos"></div><div class="scr" id="treino"></div>
 <script>
 (()=>{
 const K='rotina_v1',B='rotina_bak';
@@ -84,11 +91,11 @@ const MS=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto'
 const key=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
 const hm=d=>pad(d.getHours())+':'+pad(d.getMinutes());
 const h=(t,c,x,...k)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;k.forEach(a=>a&&e.append(a));return e};
-const P={drop:'M12 3c3.5 4.5 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 2.5-6.5 6-11z',rep:'M5 20V10M12 20V4M19 20v-7',list:'M4 7h16M4 12h16M4 17h16',save:'M12 4v11m-5-5 5 5 5-5M5 20h14',back:'M15 5l-7 7 7 7',edit:'M4 20l4-1 11-11-3-3L5 16l-1 4z',trash:'M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13',pause:'M8 5v14M16 5v14',music:'M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM21 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z',play:'M7 4l12 8-12 8z',plus:'M12 5v14M5 12h14',minus:'M5 12h14'};
+const P={drop:'M12 3c3.5 4.5 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 2.5-6.5 6-11z',rep:'M5 20V10M12 20V4M19 20v-7',list:'M4 7h16M4 12h16M4 17h16',save:'M12 4v11m-5-5 5 5 5-5M5 20h14',back:'M15 5l-7 7 7 7',edit:'M4 20l4-1 11-11-3-3L5 16l-1 4z',trash:'M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13',pause:'M8 5v14M16 5v14',stop:'M7 7h10v10H7z',gym:'M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11',music:'M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM21 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z',play:'M7 4l12 8-12 8z',plus:'M12 5v14M5 12h14',minus:'M5 12h14'};
 const ic=p=>'<svg viewBox="0 0 24 24"><path d="'+p+'"/></svg>';
 const ib=(p,f)=>{const b=h('button','ib');b.innerHTML=ic(p);b.onclick=f;return b};
 const top=(l,...r)=>h('div','bar',null,l,h('div',null,null,...r));
-const R={};let S,stack=['main'],pd=new Date().getDay(),dk='',ed=0,cur=null,cid='',stopP=()=>{};
+const R={};let S,stack=['main'],pd=new Date().getDay(),dk='',ed=0,cur=null,cid='',stopP=()=>{},tid='',ctx=null,after=null,popN=0;
 const F=['ui-monospace,Consolas,"Courier New",monospace','system-ui,Roboto,Arial,sans-serif','Georgia,"Noto Serif",serif','sans-serif-condensed,"Roboto Condensed",Arial,sans-serif'];
 const af=()=>document.documentElement.style.setProperty('--ff',F[S.font||0]);
 try{localStorage.setItem('t','1');localStorage.removeItem('t')}catch(e){alert('Armazenamento indisponível. Abra o arquivo pelo Chrome.')}
@@ -98,28 +105,43 @@ const SEED={"1":[["04:00","Acordar, Arrumar a cama e Agradecer"],["04:20","Corri
 function mig(){if(S.seed==2)return;S.presets={};for(const i in SEED)S.presets[i]=SEED[i].map(a=>({t:a[0],x:a[1]}));S.seed=2;const d=S.days[key(new Date())];if(d&&!d.touched&&!d.closed)d.tasks=S.presets[new Date().getDay()].map(mk)}
 const SEEDC=[["Por causa dele - Jessé Aguiar","D\nPor mim eu parava agora\n\nO cansaço me atingiu\n          A\nE eu desacelerei\n\nO ânimo em mim sumiu\n        Em  D\nE eu parei\n   G\nParei para respirar um pouco\n         D\nE não desistir\n             A\nMas mesmo assim\n\n                    D\nPor mim eu parava agora\n\nMeu coração entrou em alerta\n        A\nFicou exausto\n\nEu sinto um medo que me aperta\n                 Em  D\nE me deixa assustado\n     G                             D\nPor mim eu já teria há tempos parado\n\n[Pré-Refrão]\n\nBm                              G\n   Mas toda vez que eu tô cansado\n\nJesus me abastece\n\nE me deixa claro\nD\n  Que Ele não quer me ver prostrado\nA\nÉ difícil, cansativo\n                     Em\nMas Ele está lado a lado\n                        D    G\nMe enviando qualquer recurso\n\nMe aliviando\n\nE me deixando mais seguro\nBm\n   E toda vez que eu quero parar\n    A\nEle aparece pra me fazer avançar\n     Em                   D\nPor mim eu já teria desistido\n                 G\nMas por Ele eu chego lá\n\n[Refrão]\n\n                D\nFoi por causa d'Ele\n                    A\nQue eu ainda não parei\n\nNem desisti\n                Bm\nFoi por causa d'Ele\n                   G\nQue eu levantei e decidi seguir\n                D\nE é por causa d'Ele\n                   A\nQue eu ainda continuo a lutar\n                Em\nPor causa de Jesus\n                  D\nQue sempre me conduz\n                G\nEu sei que eu chego lá\n\nPorque quando eu não der conta\n           Em  D  G\nEle vai me ajudar\n\n[Solo] Em  D  G\n\n[Pré-Refrão]\n\nBm                              G\n   Mas toda vez que eu tô cansado\n\nJesus me abastece\n\nE me deixa claro\nD\n  Que Ele não quer me ver prostrado\nA\nÉ difícil, cansativo\n\nMas Ele está lado a lado\nEm                         D    G\n   Me enviando qualquer recurso\n\nMe aliviando\n\nE me deixando mais seguro\nBm\n   E toda vez que eu quero parar\n    A\nEle aparece pra me fazer avançar\n     Em                   D\nPor mim eu já teria desistido\n                 G\nMas por Ele eu chego lá\n\n[Refrão]\n\n                D\nFoi por causa d'Ele\n                    A\nQue eu ainda não parei\n\nNem desisti\n                Bm\nFoi por causa d'Ele\n\nQue eu levantei\n   G\nE decidi seguir\n                D\nE é por causa d'Ele\n                   A\nQue eu ainda continuo a lutar\n                Em\nPor causa de Jesus\n                  D\nQue sempre me conduz\n                G\nEu sei que eu chego lá\n\nPorque quando eu não der conta\n     D\nEle vai me ajudar\n\n( A  Em  D  G )\n\n[Ponte]\n\n                D\nFoi por causa d'Ele\n\nQue eu não parei\n                A\nFoi por causa d'Ele\n\nQue eu não desisti\n              Em\nÉ por causa d'Ele\n\nQue eu estou aqui\n            G\nDizendo que é por causa d'Ele\n\nÉ por causa d'Ele\n\n              D\nÉ por causa d'Ele\n\nQue eu não parei\n              A\nÉ por causa d'Ele\n\nQue eu não desisti\n              Em\nÉ por causa d'Ele\n\nQue estou aqui\n            G\nDizendo que é por causa d'Ele\n                  A\nQue é por causa d'Ele\n\n[Refrão]\n\n                D\nFoi por causa d'Ele\n                    A\nQue eu ainda não parei\n\nNem desisti\n                Bm\nFoi por causa d'Ele\n\nQue eu levantei\n   G\nE decidi seguir\n                D\nE é por causa d'Ele\n        A\nQue eu ainda continuo a lutar\n                Em\nPor causa de Jesus\n                  D\nQue sempre me conduz\n                G\nEu sei que eu chego lá\n\nPorque quando eu não der conta\n     D\nEle vai me ajudar\n\nFoi por causa d'Ele\n\nQue eu não parei\n                A\nFoi por causa d'Ele\n\nQue eu não desisti\n              Em\nÉ por causa d'Ele\n              D\nQue eu estou aqui\n            G\nDizendo que é por causa d'Ele\n\nÉ por causa d'Ele\n"],["É tudo sobre você - Morada","[Intro] Am  C  Am  C\n\n[Dedilhado - Intro]\n\nParte 1 de 2\n   Am              C\nE|---------0---------------0----------------| \nB|-----1-------1-------1-------1------------| \nG|---2---2---2---2---0---0---0---0----------| \nD|------------------------------------------| \nA|-0---------------3------------------------| \nE|------------------------------------------| \n\nParte 2 de 2\n   Am              C\nE|---------0---------------0----------------| \nB|-----1-------1-------1-------1------------| \nG|---2---2---2---2---0---0---0---0----------| \nD|------------------------------------------| \nA|-0---------------3------------------------| \nE|------------------------------------------|\n\n\nAm                           C\n   A porta da casa mais simples\n\nQue o anjo da morte não entra\nAm\n   A estrada que corre pro mar\n   C                            G  Em\nO vento que abre o caminho é você\n     F7M\nÉ você\n\nAm\n   A nuvem que aponta o destino\nC\n  É a mesma que cobre o passado\nAm\n   O pão que sacia a fome\n   C                             G  Em\nA rocha que mata minha sede é você\n     F7M\nÉ você\n\n[Pré-Refrão]\n\nF7M/C\n      Mais perto do monte\nG\n  Mais perto da face\nAm\n   Me espanto\n            C   G/B  Am G\nCom o peso da Tua  glória\nF7M/C\n      Mais perto da glória\nG\n  É mais perto da morte\nAm                   G/B\n   O medo quer me parar\n\n[Refrão]\n\n                 F7M/C\nEntão me tira o medo\n\nQue me faz dizer Moisés\n   G     Am\nSuba em meu lugar\n    Em\nMe faz entender\n    F7M/C\nQue a tempestade é você\n               G  Am\nChuva forte é vo_cê\n                 Em\nVento forte é você\n\nE o que me faz tremer as pernas\nF7M/C\nA porta aberta é você\n\n                 G  Am\nMas a fechada é vo_cê\n                Em\nÉ tudo sobre você\n\nEu também vou subir\n\n[Pré-Refrão]\n\nF7M/C\n      Mais perto do monte\nG\n  Mais perto da face\nAm\n   Me espanto\n            C   G/B  Am  G\nCom o peso da Tua  glóri_a\nF7M/C\n      Mais perto da glória\nG\n  É mais perto da morte\nAm                   G/B\n   O medo quer me parar\n\n[Refrão]\n\n                 F7M/C\nEntão me tira o medo\n\nQue me faz dizer Moisés\n   G     Am\nSuba em meu lugar\n    Em\nMe faz entender\n    F7M/C\nQue a tempestade é você\n               G  Am\nChuva forte é vo_cê\n                 Em\nVento forte é você\n\nE o que me faz tremer as pernas\n\nF7M/C\nA porta aberta é você\n                 G  Am\nMas a fechada é vo_cê\n                Em\nÉ tudo sobre você\n           F7M/C\nMe tira o medo\n\nQue me faz dizer Moisés\n   G     Am\nSuba em meu lugar\n    Em\nMe faz entender\n    F7M/C\nQue a tempestade é você\n               G  Am\nChuva forte é vo_cê\n                 Em\nVento forte é você\n\nE o que me faz tremer as pernas\n\nF7M/C\nA porta aberta é você\n                 G  Am\nMas a fechada é vo_cê\n                Em\nÉ tudo sobre você\n\nEu também vou subir\n\n[Ponte]\n\nF7M/C\n      Eu vou subir o monte\nG\n  Que muitos desistiram\nAm\n   E vou ficar lá\nEm\n   Até te encontrar\nF7M/C\n      Eu vou entrar na casa\nG\n  E vou fazer morada\nAm\n   E vou ficar lá\nEm\n   Até te encontrar\n\nF7M/C\n      Eu vou subir o monte\nG\n  Que muitos desistiram\nAm\n   E vou ficar lá\nEm\n   Até te encontrar\nF7M/C\n      Eu vou entrar na casa\nG\n  E vou fazer morada\nAm\n   E vou ficar lá\nEm\n   Até te encontrar\n\n[Pré-Refrão]\n\nF7M/C\n      Mais perto do monte\nG\n  Mais perto da face\nAm\n   Me espanto\n            C   G/B  Am  G\nCom o peso da Tua  glóri_a\nF7M/C\n      Mais perto da glória\nG\n  É mais perto da morte\nAm                   G/B\n   O medo quer me parar\n\n[Refrão]\n\n                 F7M/C\nEntão me tira o medo\n\nQue me faz dizer Moisés\n   G     Am\nSuba em meu lugar\n    Em\nMe faz entender\n    F7M/C\nQue a tempestade é você\n               G  Am\nChuva forte é vo_cê\n                 Em\nVento forte é você\n\nE o que me faz tremer as pernas\n\nF7M/C\nA porta aberta é você\n                 G  Am\nMas a fechada é vo_cê\n                Em\nÉ tudo sobre você\n\nF7M/C\nA tempestade é você\n               G  Am\nChuva forte é vo_cê\n                 Em\nVento forte é você\n\nE o que me faz tremer as pernas\n\nF7M/C\nA porta aberta é você\n                 G  Am\nMas a fechada é vo_cê\n                Em\nÉ tudo sobre você\n                    F7M/C\nEu também vou subir\n\nEu também vou subir\n          Am  D\nEu vou subir\n\n( F7M/C  Am  D )\n( F7M/C  G  F7M/C  G  F7M/C )\n\n[Primeira parte]\n\nAm\n   A nuvem que aponta o destino\nC\n  É a mesma que cobre o passado\nAm\n   O pão que sacia a fome\n   C                             G  Em\nA rocha que mata minha sede é você\n     F7M\nÉ você\n"]];
 function mig2(){if(!S.cifras)S.cifras=SEEDC.map((a,i)=>({id:'s'+i,title:a[0],text:a[1]}))}
-function mig3(){S.cifras.forEach(c=>{if(c.artist===undefined){const q=sp(c.title);c.title=q.title;c.artist=q.artist}if(c.genre===undefined)c.genre=/^s\d$/.test(c.id)?'Gospel':''})}
+function mig3(){if(!S.trn)S.trn=[];S.cifras.forEach(c=>{if(c.artist===undefined){const q=sp(c.title);c.title=q.title;c.artist=q.artist}if(c.genre===undefined)c.genre=/^s\d$/.test(c.id)?'Gospel':''})}
+const TR=[{"id":"tr1","d":1,"name":"Segunda - Peito, Tríceps e Abdômen","ex":[["Supino reto","4","10"],["Supino inclinado máquina","4","10"],["Voador","4","10"],["Tríceps polia","4","10"],["Tríceps corda","4","10"],["Tríceps banco","4","10"],["Abdominal infra","3","20"],["Abdominal supra","3","20"]]},{"id":"tr2","d":2,"name":"Terça - Costas, Bíceps e Trapézio","ex":[["Puxada alta","4","10"],["Remada baixa","4","10"],["Serrote","4","10"],["Rosca direta barra reta","4","10"],["Rosca alternada + martelo","4","10"],["Rosca Scott","4","10"],["Trapézio","4","10"],["Trapézio","4","10"]]},{"id":"tr3","d":3,"name":"Quarta - Pernas e Ombros","ex":[["Agachamento smith","4","10"],["Extensora","4","10"],["Flexora","4","10"],["Adutora","4","10"],["Panturrilha no smith","4","10"],["Elevação lateral","4","10"],["Elevação frontal","4","10"],["Desenvolvimento com halteres","4","10"]]},{"id":"tr4","d":4,"name":"Quinta - Peito, Tríceps e Abdômen","ex":[["Supino reto","4","10"],["Supino inclinado máquina","4","10"],["Voador","4","10"],["Tríceps polia","4","10"],["Tríceps corda","4","10"],["Tríceps banco","4","10"],["Abdominal infra","3","20"],["Abdominal supra","3","20"]]},{"id":"tr5","d":5,"name":"Sexta - Costas, Bíceps e Trapézio","ex":[["Puxada alta","4","10"],["Remada baixa","4","10"],["Serrote","4","10"],["Rosca direta barra reta","4","10"],["Rosca alternada + martelo","4","10"],["Rosca Scott","4","10"],["Trapézio","4","10"],["Trapézio","4","10"]]}];
+function mig4(){if(S.seed3)return;S.seed3=1;
+ TR.forEach(t=>{if(!S.trn.some(z=>z.id==t.id))S.trn.push({id:t.id,name:t.name,ex:t.ex.map(a=>({n:a[0],s:a[1],r:a[2],c:'',t:''}))})});
+ TR.forEach(t=>{const p=(S.presets[t.d]||[]).find(z=>/muscula[cç][aã]o/i.test(z.x));if(p)p.tr=t.id});
+ const d=S.days[key(new Date())],t=TR.find(z=>z.d==new Date().getDay());
+ if(d&&!d.closed&&t){const tr=S.trn.find(z=>z.id==t.id);d.tasks.forEach(k=>{if(/muscula[cç][aã]o/i.test(k.x)&&!k.w)k.w=mkw(tr)})}
+}
 function load(){
- for(const k of [K,B]){try{const j=JSON.parse(localStorage.getItem(k));if(j&&j.days&&j.presets){S=j;mig();mig2();mig3();return}}catch(e){}}
+ for(const k of [K,B]){try{const j=JSON.parse(localStorage.getItem(k));if(j&&j.days&&j.presets){S=j;mig();mig2();mig3();mig4();return}}catch(e){}}
  S={presets:{},days:{},logs:{}};
- mig();mig2();mig3();
+ mig();mig2();mig3();mig4();
 }
 function save(){const j=JSON.stringify(S);try{localStorage.setItem(K,j);localStorage.setItem(B,j)}catch(e){}}
-const mk=p=>({t:p.t,x:p.x,s:0,n:''});
+const mkw=tr=>({name:tr.name,ex:tr.ex.filter(e=>e.n.trim()).map(e=>({n:e.n.trim(),s:e.s,r:e.r,c:e.c,t:e.t,st:0,cf:''}))});
+const mk=p=>{const o={t:p.t,x:p.x,s:0,n:''},tr=p.tr&&(S.trn||[]).find(z=>z.id==p.tr);if(tr)o.w=mkw(tr);return o};
 const so=d=>d.tasks.slice().sort((a,b)=>a.t<b.t?-1:a.t>b.t?1:0);
 const stv=(d,k,t)=>t.s||((d.closed||k<key(new Date())||t.t<hm(new Date()))?-1:0);
 const cnt=k=>{const d=S.days[k];return [d.tasks.length,d.tasks.filter(t=>stv(d,k,t)==1).length]};
 const pct=(o,n)=>n?Math.round(o*100/n):0;
 function ens(){const k=key(new Date());if(!S.days[k])S.days[k]={tasks:S.presets[new Date().getDay()].map(mk),rain:0,closed:0,touched:0};return S.days[k]}
+const kg=v=>/^[\d.,]+$/.test(v||'')?v+' kg':(v||'');
+const ef=e=>e.cf||e.c||'';
+const exd=e=>[(e.s||e.r)?(e.s||'-')+'×'+(e.r||'-'):'',kg(ef(e)),e.t||''].filter(Boolean).join(' · ');
+const el=m=>m?(m.a||0)+(m.s?Date.now()-m.s:0):0;
+const ft=ms=>{const q=Math.floor(ms/1000);return pad(Math.floor(q/3600))+':'+pad(Math.floor(q%3600/60))+':'+pad(q%60)};
+function wl(t){if(!t.w)return '';const a=t.w.ex,o=a.filter(e=>e.st==1).length,m=t.w.tm,tl=m&&el(m)>0?'     Tempo de treino: '+ft(el(m))+(m.i?' ('+m.i+(m.o?' às '+m.o:'')+')':'')+(m.s?' (em andamento)':'')+'\n':'';
+ return '     Treino: '+t.w.name+' - '+o+'/'+a.length+' exercícios concluídos\n'+tl+a.map(e=>'     ['+(e.st==1?'OK':'--')+'] '+e.n+(exd(e)?': '+exd(e):'')+(e.cf&&e.c&&e.cf!==e.c?' (preset '+kg(e.c)+')':'')).join('\n')+'\n'}
 function txt(k){
  const d=S.days[k],[y,m,dd]=k.split('-'),w=new Date(y,m-1,dd).getDay(),[n,o]=cnt(k);
  let s=dd+'/'+m+'/'+y+' - '+WD[w]+(d.rain?' - CHUVA':'')+'\nConcluídas: '+o+'/'+n+' ('+pct(o,n)+'%)\n\n';
- so(d).forEach(t=>{const v=stv(d,k,t);s+='['+(v==1?'OK':'--')+'] '+t.t+' '+t.x+(v==1&&t.at?' (cumprida às '+t.at+')':'')+(d.rain?' (chuva)':'')+(t.n?'\n     nota: '+t.n.replace(/\n/g,' / '):'')+'\n'});
+ so(d).forEach(t=>{const v=stv(d,k,t);s+='['+(v==1?'OK':'--')+'] '+t.t+' '+t.x+(v==1&&t.at?' (cumprida às '+t.at+')':'')+(d.rain?' (chuva)':'')+(t.n?'\n     nota: '+t.n.replace(/\n/g,' / '):'')+'\n'+wl(t)});
  return s;
 }
 function roll(){
  const today=key(new Date());let ch=!S.days[today];
- for(const k in S.days){const d=S.days[k];if(k<today&&!d.closed){d.tasks.forEach(t=>{if(!t.s)t.s=-1});d.closed=1;S.logs[k]=txt(k);ch=1}}
+ for(const k in S.days){const d=S.days[k];if(k<today&&!d.closed){d.tasks.forEach(t=>{if(!t.s)t.s=-1;const m=t.w&&t.w.tm;if(m&&m.s){const [y,mo,dd]=k.split('-');m.a+=Math.max(0,new Date(y,mo-1,dd,23,59,59).getTime()-m.s);m.s=0;m.f=1;m.o='23:59'}});d.closed=1;S.logs[k]=txt(k);ch=1}}
  ens();if(ch)save();
 }
 function dl(name,text){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'}));a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
@@ -136,7 +158,6 @@ function bind(el,onTap,onSwipe){
 function rowEl(k,d,t,cb,live){
  const v=stv(d,k,t),r=h('div','row'+(v==1?' ok':v<0?' no':'')),ds=h('div','ds',null,h('span',null,t.x));
  const tm=h('div','tm',t.t);r.append(tm,ds);
- if(live&&stack[stack.length-1]=='main'&&/viol[aã]o/i.test(t.x)){const mb=h('button','mi');mb.innerHTML=ic(P.music);mb.onpointerdown=mb.onpointerup=e=>e.stopPropagation();mb.onclick=()=>nav('cifras');tm.append(mb)}
  if(!live){if(t.n)ds.firstChild.append(h('span','nn',t.n));return r}
  if(t.n)ds.append(h('span','nt','✎'));
  bind(r,()=>bubble(k,t,false,cb),dir=>{t.s=t.s===dir?(dir<0&&d.closed?-1:0):dir;if(t.s==1)t.at=hm(new Date())+':'+pad(new Date().getSeconds());else delete t.at;d.touched=1;cb()});
@@ -149,12 +170,12 @@ R.main=()=>{
  const rb=ib(P.drop,()=>{d.rain=d.rain?0:1;save();R.main()});rb.classList.toggle('on',!!d.rain);
  const sv=ib(P.save,()=>{save();dl('rotina_'+k+'.txt',txt(k));sv.classList.add('on');setTimeout(()=>sv.classList.remove('on'),1200)});
  const fb=h('button','ib tx','Aa');fb.onclick=()=>{S.font=((S.font||0)+1)%F.length;save();af()};
- s.append(top(ib(P.rep,()=>nav('report')),fb,rb,ib(P.list,()=>nav('presets')),sv));
+ s.append(top(h('div',null,null,ib(P.rep,()=>nav('report')),ib(P.music,()=>nav('cifras')),ib(P.gym,()=>{ctx=null;nav('treinos')})),fb,rb,ib(P.list,()=>nav('presets')),sv));
  const dt=h('div','date',WD[n.getDay()]+', '+n.getDate()+' de '+MS[n.getMonth()]+' de '+n.getFullYear());
  if(d.rain)dt.insertAdjacentHTML('beforeend',ic(P.drop));
  const L=h('div','list');
  const cb=()=>{save();R.main()};
- so(d).forEach(t=>L.append(rowEl(k,d,t,cb,1)));
+ so(d).forEach(t=>{L.append(rowEl(k,d,t,cb,1));exRows(k,d,t,cb,1).forEach(x=>L.append(x))});
  L.append(addRow(k,cb));s.append(dt,L);
 };
 
@@ -164,7 +185,7 @@ function bubble(k,t,isNew,cb){
  const nm=h('input','bn');nm.value=t.x;nm.placeholder='Tarefa';
  const nt=h('textarea');nt.value=t.n||'';nt.rows=5;
  const fin=()=>{
-  if(isNew){if(nm.value.trim()){d.tasks.push({t:tm.value||t.t,x:nm.value.trim(),s:0,n:nt.value.trim()});d.touched=1}}
+  if(isNew){if(nm.value.trim()){t.t=tm.value||t.t;t.x=nm.value.trim();t.n=nt.value.trim();d.tasks.push(t);d.touched=1}}
   else{t.t=tm.value||t.t;if(nm.value.trim())t.x=nm.value.trim();t.n=nt.value.trim();d.touched=1}
   ov.remove();cb();
  };
@@ -172,7 +193,12 @@ function bubble(k,t,isNew,cb){
  x.onclick=()=>{if(isNew){ov.remove();return}if(confirm('Excluir tarefa?')){d.tasks=d.tasks.filter(a=>a!==t);d.touched=1;ov.remove();cb()}};
  const ok=h('button','bk','Concluir');ok.onclick=fin;
  ov.onpointerdown=e=>{if(e.target==ov)fin()};
- bx.append(h('div','bh',null,tm,x),nm,nt,ok);ov.append(bx);document.body.append(ov);
+ const mus=h('button','mi');mus.innerHTML=ic(P.music);
+ const gy=h('button','mi');gy.innerHTML=ic(P.gym);
+ const sm=()=>{mus.style.display=/viol[aã]o/i.test(nm.value)?'flex':'none';gy.style.display=/muscula[cç][aã]o/i.test(nm.value)?'flex':'none'};sm();nm.addEventListener('input',sm);
+ mus.onclick=()=>{fin();nav('cifras')};
+ gy.onclick=()=>{fin();ctx={k,t,cb};nav('treinos')};
+ bx.append(h('div','bh',null,h('div','bg',null,tm,mus,gy),x),nm,nt,ok);ov.append(bx);document.body.append(ov);
  (isNew?nm:nt).focus();
 }
 
@@ -221,7 +247,7 @@ R.detail=()=>{
  s.append(top(ib(P.back,()=>history.back()),eb,rb,xb,ib(P.save,()=>dl('rotina_'+k+'.txt',S.logs[k]||txt(k)))));
  const dt=h('div','date',WD[w]+', '+(+dd)+' de '+MS[m-1]+' de '+y);if(d.rain)dt.insertAdjacentHTML('beforeend',ic(P.drop));
  const L=h('div','list');
- so(d).forEach(t=>L.append(rowEl(k,d,t,cb,ed)));
+ so(d).forEach(t=>{L.append(rowEl(k,d,t,cb,ed));exRows(k,d,t,cb,ed).forEach(x=>L.append(x))});
  if(ed)L.append(addRow(k,cb));
  s.append(dt,L);
 };
@@ -300,7 +326,7 @@ R.player=()=>{
  let lv=S.cs||5,run=1,pos=0,last=0,t0=0,touch=0,hold=0,raf=0,wl=null;
  const sn=h('span','sp',String(lv)),pp=ib(P.pause,()=>tg());
  const tg=()=>{run=run?0:1;pp.innerHTML=ic(run?P.pause:P.play)};
- const set=d=>{lv=Math.max(1,Math.min(15,lv+d));S.cs=lv;sn.textContent=lv;save()};
+ const set=d=>{lv=Math.max(1,Math.min(30,lv+d));S.cs=lv;sn.textContent=lv;save()};
  const box=h('div','cb'),pre=fmt(c.text);box.append(pre);
  let sb=null;
  if(pre.querySelector('.sl')){sb=h('button','fb','solo');sb.onclick=()=>{S.hs=S.hs?0:1;save();ap()}}
@@ -324,6 +350,67 @@ R.player=()=>{
  stopP=()=>{cancelAnimationFrame(raf);try{wl&&wl.release()}catch(e){}};
 };
 
+function tmRow(d,t,cb,live){
+ const w=t.w,m=w.tm;
+ if(!live){if(!m||!el(m))return null;return h('div','row sx',null,h('div','ds',null,h('span','tmv',ft(el(m))),h('span','nt',m.i?m.i+(m.o?'–'+m.o:''):'')))}
+ const mm=w.tm=m||{a:0,s:0,f:0},v=h('span','tmv',ft(el(mm)));v._w=w;
+ if(mm.s)v.style.color='#6ea8ff';
+ const b=(p,on,f)=>{const x=h('button','ib sm');x.innerHTML=ic(p);x.disabled=!on;x.onclick=f;return x};
+ const stp=()=>{if(mm.s){mm.a+=Date.now()-mm.s;mm.s=0}};
+ return h('div','row sx',null,h('div','ds',null,v,h('div',null,null,
+  b(P.play,!mm.s,()=>{mm.s=Date.now();if(!mm.i)mm.i=hm(new Date());mm.f=0;mm.o='';d.touched=1;cb()}),
+  b(P.pause,!!mm.s,()=>{stp();cb()}),
+  b(P.stop,!!mm.s||(mm.a>0&&!mm.f),()=>{stp();if(mm.a>0){mm.f=1;mm.o=hm(new Date())}cb()}))))}
+function exRows(k,d,t,cb,live){
+ if(!t.w)return [];
+ const a=[],tr=tmRow(d,t,cb,live);if(tr)a.push(tr);
+ t.w.ex.forEach(e=>{
+  const r=h('div','row sx'+(e.st==1?' ok':e.st<0?' no':''),null,h('div','ds',null,h('span',null,e.n),h('span','nt',exd(e))));
+  if(live)bind(r,()=>cargaB(e,cb),dir=>{e.st=e.st===dir?0:dir;if(e.st==1)e.at=hm(new Date());else delete e.at;d.touched=1;cb()});
+  a.push(r)});
+ return a}
+function cargaB(e,cb){
+ const ov=h('div','ov'),bx=h('div','bx'),i=h('input','bn');
+ i.value=e.cf||e.c||'';i.placeholder='Carga (kg)';i.inputMode='decimal';
+ const fin=()=>{const v=i.value.trim();e.cf=v===e.c?'':v;ov.remove();cb()};
+ const ok=h('button','bk','Concluir');ok.onclick=fin;ov.onpointerdown=ev=>{if(ev.target==ov)fin()};
+ bx.append(h('div','bn',e.n),i,ok);ov.append(bx);document.body.append(ov);i.focus();i.select();
+}
+R.treinos=()=>{
+ const s=$('treinos');s.textContent='';
+ s.append(top(ib(P.back,()=>history.back())));
+ const L=h('div','list');
+ S.trn.forEach(tr=>{
+  const x=h('button','pd','×');x.onclick=ev=>{ev.stopPropagation();if(confirm('Excluir treino?')){S.trn=S.trn.filter(z=>z!==tr);save();R.treinos()}};
+  const r=h('div','row',null,h('div','ds',tr.name||'Treino'),x);r.onclick=()=>{tid=tr.id;nav('treino')};L.append(r)});
+ const ad=h('div','row add',null,h('div','tm','+'),h('div','ds','Adicionar treino'));
+ ad.onclick=()=>{const tr={id:Date.now()+'',name:'',ex:[]};S.trn.push(tr);save();tid=tr.id;nav('treino')};
+ L.append(ad);s.append(L);
+};
+R.treino=()=>{
+ const s=$('treino'),tr=S.trn.find(z=>z.id==tid);s.textContent='';
+ if(!tr){history.back();return}
+ const sb=h('button','fb','Enviar');
+ sb.onclick=()=>{
+  const w={name:tr.name,ex:tr.ex.filter(e=>e.n.trim()).map(e=>({n:e.n.trim(),s:e.s,r:e.r,c:e.c,t:e.t,st:0,cf:''}))};
+  if(!w.ex.length){alert('Adicione exercícios ao treino');return}
+  if(ctx){if(ctx.t.w&&!confirm('Substituir o treino desta tarefa?'))return;const c=ctx;c.t.w=w;S.days[c.k].touched=1;save();after=()=>c.cb()}
+  else after=()=>bubble(key(new Date()),{t:hm(new Date()),x:'Musculação',n:'',s:0,w},true,()=>{save();R.main()});
+  backN(2)};
+ s.append(top(ib(P.back,()=>history.back()),sb));
+ const L=h('div','list'),nm=h('input','bn tn');
+ nm.value=tr.name;nm.placeholder='Treino';nm.oninput=()=>{tr.name=nm.value;save()};L.append(nm);
+ tr.ex.forEach(e=>{
+  const n=h('input','bn');n.value=e.n;n.placeholder='Exercício';n.oninput=()=>{e.n=n.value;save()};
+  const x=h('button','pd','×');x.onclick=()=>{tr.ex=tr.ex.filter(z=>z!==e);save();R.treino()};
+  const f=h('div','fx');
+  [['s','Séries'],['r','Reps'],['c','Carga'],['t','Tempo']].forEach(([q,ph])=>{const i=h('input');i.value=e[q]||'';i.placeholder=ph;if(q!='t')i.inputMode='decimal';i.oninput=()=>{e[q]=i.value;save()};f.append(i)});
+  L.append(h('div','ex',null,h('div','fh',null,n,x),f))});
+ const ad=h('div','row add',null,h('div','tm','+'),h('div','ds','Adicionar exercício'));
+ ad.onclick=()=>{tr.ex.push({n:'',s:'',r:'',c:'',t:''});save();R.treino();const a=s.querySelectorAll('.ex .bn');a[a.length-1].focus()};
+ L.append(ad);s.append(L);
+};
+
 function show(n){document.querySelectorAll('.scr').forEach(e=>e.classList.toggle('on',e.id==n));R[n]()}
 function nav(n){stack.push(n);history.pushState(0,'');show(n)}
 function back(){
@@ -334,12 +421,13 @@ function back(){
  }
  show(stack[stack.length-1]);
 }
+const backN=n=>{popN=n;history.go(-n)};
 function tick(){roll();if(stack[stack.length-1]=='main'&&!document.querySelector('.ov'))R.main()}
 
 load();af();roll();history.replaceState(0,'');show('main');
 if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register('sw.js');
-addEventListener('popstate',back);
+addEventListener('popstate',()=>{let q=popN||1;popN=0;while(q--)back();if(after){const f=after;after=null;f()}});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)tick()});
-setInterval(tick,30000);
+setInterval(tick,30000);setInterval(()=>document.querySelectorAll('.tmv').forEach(e=>{if(e._w&&e._w.tm)e.textContent=ft(el(e._w.tm))}),1000);
 })();
 </script></body></html>
