@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no,interactive-widget=resizes-content">
 <meta name="theme-color" content="#2b2b2b"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png">
 <title>Rotina</title>
 <style>
@@ -80,8 +80,37 @@ textarea{resize:none;border:1px solid #555;padding:8px;font-size:14px}
 .ex .bn{font-size:16px}
 .fx{display:flex;gap:6px}.fx input{flex:1;min-width:0;text-align:center;border:1px solid #555;padding:7px 2px;font-size:14px}
 .tn{font-size:18px;margin-bottom:8px;flex:none}
-.ib.sm{width:40px;height:38px}.ib:disabled{opacity:.3}.sx .ds>div{display:flex}.tmv{font-size:20px;letter-spacing:1px}</style></head><body>
-<div class="scr" id="main"></div><div class="scr" id="presets"></div><div class="scr" id="report"></div><div class="scr" id="detail"></div><div class="scr" id="cifras"></div><div class="scr" id="player"></div><div class="scr" id="treinos"></div><div class="scr" id="treino"></div>
+.ib.sm{width:40px;height:38px}.ib:disabled{opacity:.3}.sx .ds>div{display:flex}.tmv{font-size:20px;letter-spacing:1px}.tm{line-height:1.3}
+.row.wk .tm{align-items:flex-start;padding-top:11px}
+.ds.wk{flex-direction:column;align-items:stretch;justify-content:flex-start;gap:0;padding:11px 10px 0;overflow:hidden}
+.th{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.th span:first-child{min-width:0;overflow-wrap:anywhere}
+.tl{display:flex;align-items:center;justify-content:space-between;margin:0;padding:6px 12px;border-top:1px solid #4a4a4a}
+.tg{display:flex;gap:6px}
+.tb2{width:42px;height:34px;border:1px solid #666;display:flex;align-items:center;justify-content:center;color:#cfcfcf}
+.tb2 svg{width:17px;height:17px}
+.xl{margin:0}
+.xe{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;min-height:38px;border-top:1px solid #4a4a4a;color:#cfcfcf}
+.xe span:first-child{min-width:0;overflow-wrap:anywhere}
+.xe.ok{color:#6ea8ff;background:#484848}.xe.no{color:#ff6b6b;background:#484848}
+textarea.tt{border:0;border-bottom:1px solid #555;padding:6px 2px;overflow:hidden}
+.bar .ib{width:42px}
+.ds.col{flex-direction:column;align-items:stretch;justify-content:flex-start;gap:4px}
+.ex2{font-size:13px;color:#8f8f8f;line-height:1.35;overflow-wrap:anywhere}.ex2 b{color:#ff9a1f}
+.sbar{padding:0 8px 10px;flex:none}
+.eh{display:flex;gap:8px;align-items:flex-end;padding:0 10px 8px;flex:none}.eh .tn{margin:0;flex:1;min-width:0}
+.dt{width:132px;flex:none;font-size:13px;text-align:center;border:1px solid #555;padding:8px 2px;color-scheme:dark}
+.etb{display:flex;align-items:center;gap:4px;padding:0 10px 8px;flex:none;overflow-x:auto}
+.tbn{width:32px;height:34px;border:1px solid #666;display:flex;align-items:center;justify-content:center;color:#cfcfcf;font-size:16px;flex:none}
+.sep{width:1px;height:22px;background:#555;margin:0 3px;flex:none}
+.ed{flex:1;min-height:0;overflow-y:auto;padding:12px 14px 40vh;outline:0;line-height:1.5;color:#cfcfcf;overflow-wrap:anywhere;-webkit-user-select:text;user-select:text}
+.ed:empty:before{content:attr(data-ph);color:#666}
+.ed font[size="1"]{font-size:11px}.ed font[size="2"]{font-size:13px}.ed font[size="3"]{font-size:15px}.ed font[size="4"]{font-size:19px}.ed font[size="5"]{font-size:24px}.ed font[size="6"]{font-size:30px}.ed font[size="7"]{font-size:38px}
+.wb{margin:0 -12px;overflow:hidden;border-bottom:1px solid #4a4a4a}
+.xo{border:2px solid #555;padding:12px 10px;display:flex;justify-content:space-between;align-items:center;flex:none}
+.xo.on{background:#484848;border-color:#484848;color:#6ea8ff}.xo.on:after{content:'✓'}
+.dtp{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;bottom:0;left:0}.eh .tn{border:0}.cw{display:flex;align-items:center;gap:4px}.sph{width:18px;height:18px;border-radius:50%;border:1px solid #888;display:block}.tbi{display:flex}.tbi svg{width:16px;height:16px}</style></head><body>
+<div class="scr" id="main"></div><div class="scr" id="presets"></div><div class="scr" id="report"></div><div class="scr" id="detail"></div><div class="scr" id="cifras"></div><div class="scr" id="player"></div><div class="scr" id="treinos"></div><div class="scr" id="treino"></div><div class="scr" id="estudos"></div><div class="scr" id="estudo"></div>
 <script>
 (()=>{
 const K='rotina_v1',B='rotina_bak';
@@ -91,11 +120,11 @@ const MS=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto'
 const key=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
 const hm=d=>pad(d.getHours())+':'+pad(d.getMinutes());
 const h=(t,c,x,...k)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;k.forEach(a=>a&&e.append(a));return e};
-const P={drop:'M12 3c3.5 4.5 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 2.5-6.5 6-11z',rep:'M5 20V10M12 20V4M19 20v-7',list:'M4 7h16M4 12h16M4 17h16',save:'M12 4v11m-5-5 5 5 5-5M5 20h14',back:'M15 5l-7 7 7 7',edit:'M4 20l4-1 11-11-3-3L5 16l-1 4z',trash:'M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13',pause:'M8 5v14M16 5v14',stop:'M7 7h10v10H7z',gym:'M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11',music:'M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM21 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z',play:'M7 4l12 8-12 8z',plus:'M12 5v14M5 12h14',minus:'M5 12h14'};
+const P={drop:'M12 3c3.5 4.5 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 2.5-6.5 6-11z',rep:'M5 20V10M12 20V4M19 20v-7',list:'M4 7h16M4 12h16M4 17h16',save:'M12 4v11m-5-5 5 5 5-5M5 20h14',back:'M15 5l-7 7 7 7',edit:'M4 20l4-1 11-11-3-3L5 16l-1 4z',trash:'M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13',pause:'M8 5v14M16 5v14',stop:'M7 7h10v10H7z',check:'M5 12l5 5 9-10',cal:'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',bib:'M6 3h13v16H6a2 2 0 0 0-2 2V5a2 2 0 0 1 2-2zM4 21h15M12 6v7M9 8.5h6',search:'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4.2-4.2',reset:'M1 4v6h6M3.51 15a9 9 0 1 0 2.13-9.36L1 10',gym:'M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11',music:'M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM21 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z',play:'M7 4l12 8-12 8z',plus:'M12 5v14M5 12h14',minus:'M5 12h14'};
 const ic=p=>'<svg viewBox="0 0 24 24"><path d="'+p+'"/></svg>';
 const ib=(p,f)=>{const b=h('button','ib');b.innerHTML=ic(p);b.onclick=f;return b};
 const top=(l,...r)=>h('div','bar',null,l,h('div',null,null,...r));
-const R={};let S,stack=['main'],pd=new Date().getDay(),dk='',ed=0,cur=null,cid='',stopP=()=>{},tid='',ctx=null,after=null,popN=0;
+const R={};let S,stack=['main'],pd=new Date().getDay(),dk='',ed=0,cur=null,cid='',stopP=()=>{},tid='',ctx=null,after=null,popN=0,eid='',es=0,eq='',flushE=()=>{};
 const F=['ui-monospace,Consolas,"Courier New",monospace','system-ui,Roboto,Arial,sans-serif','Georgia,"Noto Serif",serif','sans-serif-condensed,"Roboto Condensed",Arial,sans-serif'];
 const af=()=>document.documentElement.style.setProperty('--ff',F[S.font||0]);
 try{localStorage.setItem('t','1');localStorage.removeItem('t')}catch(e){alert('Armazenamento indisponível. Abra o arquivo pelo Chrome.')}
@@ -105,7 +134,7 @@ const SEED={"1":[["04:00","Acordar, Arrumar a cama e Agradecer"],["04:20","Corri
 function mig(){if(S.seed==2)return;S.presets={};for(const i in SEED)S.presets[i]=SEED[i].map(a=>({t:a[0],x:a[1]}));S.seed=2;const d=S.days[key(new Date())];if(d&&!d.touched&&!d.closed)d.tasks=S.presets[new Date().getDay()].map(mk)}
 const SEEDC=[["Por causa dele - Jessé Aguiar","D\nPor mim eu parava agora\n\nO cansaço me atingiu\n          A\nE eu desacelerei\n\nO ânimo em mim sumiu\n        Em  D\nE eu parei\n   G\nParei para respirar um pouco\n         D\nE não desistir\n             A\nMas mesmo assim\n\n                    D\nPor mim eu parava agora\n\nMeu coração entrou em alerta\n        A\nFicou exausto\n\nEu sinto um medo que me aperta\n                 Em  D\nE me deixa assustado\n     G                             D\nPor mim eu já teria há tempos parado\n\n[Pré-Refrão]\n\nBm                              G\n   Mas toda vez que eu tô cansado\n\nJesus me abastece\n\nE me deixa claro\nD\n  Que Ele não quer me ver prostrado\nA\nÉ difícil, cansativo\n                     Em\nMas Ele está lado a lado\n                        D    G\nMe enviando qualquer recurso\n\nMe aliviando\n\nE me deixando mais seguro\nBm\n   E toda vez que eu quero parar\n    A\nEle aparece pra me fazer avançar\n     Em                   D\nPor mim eu já teria desistido\n                 G\nMas por Ele eu chego lá\n\n[Refrão]\n\n                D\nFoi por causa d'Ele\n                    A\nQue eu ainda não parei\n\nNem desisti\n                Bm\nFoi por causa d'Ele\n                   G\nQue eu levantei e decidi seguir\n                D\nE é por causa d'Ele\n                   A\nQue eu ainda continuo a lutar\n                Em\nPor causa de Jesus\n                  D\nQue sempre me conduz\n                G\nEu sei que eu chego lá\n\nPorque quando eu não der conta\n           Em  D  G\nEle vai me ajudar\n\n[Solo] Em  D  G\n\n[Pré-Refrão]\n\nBm                              G\n   Mas toda vez que eu tô cansado\n\nJesus me abastece\n\nE me deixa claro\nD\n  Que Ele não quer me ver prostrado\nA\nÉ difícil, cansativo\n\nMas Ele está lado a lado\nEm                         D    G\n   Me enviando qualquer recurso\n\nMe aliviando\n\nE me deixando mais seguro\nBm\n   E toda vez que eu quero parar\n    A\nEle aparece pra me fazer avançar\n     Em                   D\nPor mim eu já teria desistido\n                 G\nMas por Ele eu chego lá\n\n[Refrão]\n\n                D\nFoi por causa d'Ele\n                    A\nQue eu ainda não parei\n\nNem desisti\n                Bm\nFoi por causa d'Ele\n\nQue eu levantei\n   G\nE decidi seguir\n                D\nE é por causa d'Ele\n                   A\nQue eu ainda continuo a lutar\n                Em\nPor causa de Jesus\n                  D\nQue sempre me conduz\n                G\nEu sei que eu chego lá\n\nPorque quando eu não der conta\n     D\nEle vai me ajudar\n\n( A  Em  D  G )\n\n[Ponte]\n\n                D\nFoi por causa d'Ele\n\nQue eu não parei\n                A\nFoi por causa d'Ele\n\nQue eu não desisti\n              Em\nÉ por causa d'Ele\n\nQue eu estou aqui\n            G\nDizendo que é por causa d'Ele\n\nÉ por causa d'Ele\n\n              D\nÉ por causa d'Ele\n\nQue eu não parei\n              A\nÉ por causa d'Ele\n\nQue eu não desisti\n              Em\nÉ por causa d'Ele\n\nQue estou aqui\n            G\nDizendo que é por causa d'Ele\n                  A\nQue é por causa d'Ele\n\n[Refrão]\n\n                D\nFoi por causa d'Ele\n                    A\nQue eu ainda não parei\n\nNem desisti\n                Bm\nFoi por causa d'Ele\n\nQue eu levantei\n   G\nE decidi seguir\n                D\nE é por causa d'Ele\n        A\nQue eu ainda continuo a lutar\n                Em\nPor causa de Jesus\n                  D\nQue sempre me conduz\n                G\nEu sei que eu chego lá\n\nPorque quando eu não der conta\n     D\nEle vai me ajudar\n\nFoi por causa d'Ele\n\nQue eu não parei\n                A\nFoi por causa d'Ele\n\nQue eu não desisti\n              Em\nÉ por causa d'Ele\n              D\nQue eu estou aqui\n            G\nDizendo que é por causa d'Ele\n\nÉ por causa d'Ele\n"],["É tudo sobre você - Morada","[Intro] Am  C  Am  C\n\n[Dedilhado - Intro]\n\nParte 1 de 2\n   Am              C\nE|---------0---------------0----------------| \nB|-----1-------1-------1-------1------------| \nG|---2---2---2---2---0---0---0---0----------| \nD|------------------------------------------| \nA|-0---------------3------------------------| \nE|------------------------------------------| \n\nParte 2 de 2\n   Am              C\nE|---------0---------------0----------------| \nB|-----1-------1-------1-------1------------| \nG|---2---2---2---2---0---0---0---0----------| \nD|------------------------------------------| \nA|-0---------------3------------------------| \nE|------------------------------------------|\n\n\nAm                           C\n   A porta da casa mais simples\n\nQue o anjo da morte não entra\nAm\n   A estrada que corre pro mar\n   C                            G  Em\nO vento que abre o caminho é você\n     F7M\nÉ você\n\nAm\n   A nuvem que aponta o destino\nC\n  É a mesma que cobre o passado\nAm\n   O pão que sacia a fome\n   C                             G  Em\nA rocha que mata minha sede é você\n     F7M\nÉ você\n\n[Pré-Refrão]\n\nF7M/C\n      Mais perto do monte\nG\n  Mais perto da face\nAm\n   Me espanto\n            C   G/B  Am G\nCom o peso da Tua  glória\nF7M/C\n      Mais perto da glória\nG\n  É mais perto da morte\nAm                   G/B\n   O medo quer me parar\n\n[Refrão]\n\n                 F7M/C\nEntão me tira o medo\n\nQue me faz dizer Moisés\n   G     Am\nSuba em meu lugar\n    Em\nMe faz entender\n    F7M/C\nQue a tempestade é você\n               G  Am\nChuva forte é vo_cê\n                 Em\nVento forte é você\n\nE o que me faz tremer as pernas\nF7M/C\nA porta aberta é você\n\n                 G  Am\nMas a fechada é vo_cê\n                Em\nÉ tudo sobre você\n\nEu também vou subir\n\n[Pré-Refrão]\n\nF7M/C\n      Mais perto do monte\nG\n  Mais perto da face\nAm\n   Me espanto\n            C   G/B  Am  G\nCom o peso da Tua  glóri_a\nF7M/C\n      Mais perto da glória\nG\n  É mais perto da morte\nAm                   G/B\n   O medo quer me parar\n\n[Refrão]\n\n                 F7M/C\nEntão me tira o medo\n\nQue me faz dizer Moisés\n   G     Am\nSuba em meu lugar\n    Em\nMe faz entender\n    F7M/C\nQue a tempestade é você\n               G  Am\nChuva forte é vo_cê\n                 Em\nVento forte é você\n\nE o que me faz tremer as pernas\n\nF7M/C\nA porta aberta é você\n                 G  Am\nMas a fechada é vo_cê\n                Em\nÉ tudo sobre você\n           F7M/C\nMe tira o medo\n\nQue me faz dizer Moisés\n   G     Am\nSuba em meu lugar\n    Em\nMe faz entender\n    F7M/C\nQue a tempestade é você\n               G  Am\nChuva forte é vo_cê\n                 Em\nVento forte é você\n\nE o que me faz tremer as pernas\n\nF7M/C\nA porta aberta é você\n                 G  Am\nMas a fechada é vo_cê\n                Em\nÉ tudo sobre você\n\nEu também vou subir\n\n[Ponte]\n\nF7M/C\n      Eu vou subir o monte\nG\n  Que muitos desistiram\nAm\n   E vou ficar lá\nEm\n   Até te encontrar\nF7M/C\n      Eu vou entrar na casa\nG\n  E vou fazer morada\nAm\n   E vou ficar lá\nEm\n   Até te encontrar\n\nF7M/C\n      Eu vou subir o monte\nG\n  Que muitos desistiram\nAm\n   E vou ficar lá\nEm\n   Até te encontrar\nF7M/C\n      Eu vou entrar na casa\nG\n  E vou fazer morada\nAm\n   E vou ficar lá\nEm\n   Até te encontrar\n\n[Pré-Refrão]\n\nF7M/C\n      Mais perto do monte\nG\n  Mais perto da face\nAm\n   Me espanto\n            C   G/B  Am  G\nCom o peso da Tua  glóri_a\nF7M/C\n      Mais perto da glória\nG\n  É mais perto da morte\nAm                   G/B\n   O medo quer me parar\n\n[Refrão]\n\n                 F7M/C\nEntão me tira o medo\n\nQue me faz dizer Moisés\n   G     Am\nSuba em meu lugar\n    Em\nMe faz entender\n    F7M/C\nQue a tempestade é você\n               G  Am\nChuva forte é vo_cê\n                 Em\nVento forte é você\n\nE o que me faz tremer as pernas\n\nF7M/C\nA porta aberta é você\n                 G  Am\nMas a fechada é vo_cê\n                Em\nÉ tudo sobre você\n\nF7M/C\nA tempestade é você\n               G  Am\nChuva forte é vo_cê\n                 Em\nVento forte é você\n\nE o que me faz tremer as pernas\n\nF7M/C\nA porta aberta é você\n                 G  Am\nMas a fechada é vo_cê\n                Em\nÉ tudo sobre você\n                    F7M/C\nEu também vou subir\n\nEu também vou subir\n          Am  D\nEu vou subir\n\n( F7M/C  Am  D )\n( F7M/C  G  F7M/C  G  F7M/C )\n\n[Primeira parte]\n\nAm\n   A nuvem que aponta o destino\nC\n  É a mesma que cobre o passado\nAm\n   O pão que sacia a fome\n   C                             G  Em\nA rocha que mata minha sede é você\n     F7M\nÉ você\n"]];
 function mig2(){if(!S.cifras)S.cifras=SEEDC.map((a,i)=>({id:'s'+i,title:a[0],text:a[1]}))}
-function mig3(){if(!S.trn)S.trn=[];S.cifras.forEach(c=>{if(c.artist===undefined){const q=sp(c.title);c.title=q.title;c.artist=q.artist}if(c.genre===undefined)c.genre=/^s\d$/.test(c.id)?'Gospel':''})}
+function mig3(){if(!S.trn)S.trn=[];if(!S.est)S.est=[];S.cifras.forEach(c=>{if(c.artist===undefined){const q=sp(c.title);c.title=q.title;c.artist=q.artist}if(c.genre===undefined)c.genre=/^s\d$/.test(c.id)?'Gospel':''})}
 const TR=[{"id":"tr1","d":1,"name":"Segunda - Peito, Tríceps e Abdômen","ex":[["Supino reto","4","10"],["Supino inclinado máquina","4","10"],["Voador","4","10"],["Tríceps polia","4","10"],["Tríceps corda","4","10"],["Tríceps banco","4","10"],["Abdominal infra","3","20"],["Abdominal supra","3","20"]]},{"id":"tr2","d":2,"name":"Terça - Costas, Bíceps e Trapézio","ex":[["Puxada alta","4","10"],["Remada baixa","4","10"],["Serrote","4","10"],["Rosca direta barra reta","4","10"],["Rosca alternada + martelo","4","10"],["Rosca Scott","4","10"],["Trapézio","4","10"],["Trapézio","4","10"]]},{"id":"tr3","d":3,"name":"Quarta - Pernas e Ombros","ex":[["Agachamento smith","4","10"],["Extensora","4","10"],["Flexora","4","10"],["Adutora","4","10"],["Panturrilha no smith","4","10"],["Elevação lateral","4","10"],["Elevação frontal","4","10"],["Desenvolvimento com halteres","4","10"]]},{"id":"tr4","d":4,"name":"Quinta - Peito, Tríceps e Abdômen","ex":[["Supino reto","4","10"],["Supino inclinado máquina","4","10"],["Voador","4","10"],["Tríceps polia","4","10"],["Tríceps corda","4","10"],["Tríceps banco","4","10"],["Abdominal infra","3","20"],["Abdominal supra","3","20"]]},{"id":"tr5","d":5,"name":"Sexta - Costas, Bíceps e Trapézio","ex":[["Puxada alta","4","10"],["Remada baixa","4","10"],["Serrote","4","10"],["Rosca direta barra reta","4","10"],["Rosca alternada + martelo","4","10"],["Rosca Scott","4","10"],["Trapézio","4","10"],["Trapézio","4","10"]]}];
 function mig4(){if(S.seed3)return;S.seed3=1;
  TR.forEach(t=>{if(!S.trn.some(z=>z.id==t.id))S.trn.push({id:t.id,name:t.name,ex:t.ex.map(a=>({n:a[0],s:a[1],r:a[2],c:'',t:''}))})});
@@ -113,10 +142,12 @@ function mig4(){if(S.seed3)return;S.seed3=1;
  const d=S.days[key(new Date())],t=TR.find(z=>z.d==new Date().getDay());
  if(d&&!d.closed&&t){const tr=S.trn.find(z=>z.id==t.id);d.tasks.forEach(k=>{if(/muscula[cç][aã]o/i.test(k.x)&&!k.w)k.w=mkw(tr)})}
 }
+const SEEDE={"title":"1 Coríntios Versículo 1","date":"2026-10-19","html":"<div>Autor: Apóstolo Paulo com apoio do escrevente Sóstenes<\/div><div>Período: 55–56 d.C.<\/div><div>Corinto fica localizada na região do Peloponeso, na Grécia, próxima a uma praia linda.<\/div><div><br><\/div><div>Paulo, em sua segunda viagem missionária, visitou a cidade de Corinto, onde permaneceu por um ano e meio ensinando a Palavra de Deus aos novos convertidos, após sua saída.<\/div><div>O livro de Coríntios é uma carta para a Igreja, na qual o apóstolo Paulo busca reestruturar a igreja que está perdendo a conduta cristã. Ensiná-los requeria que Paulo tivesse consciência de que, por mais que tentemos suprimir ou desencorajar as vontades da carne, não conseguimos extingui-las, por isso era necessário um tom de pastor no qual as palavras desse livro foram empregadas.<\/div><div><br><\/div><div>Leitura bíblica 19/10/2026 (4:00 às 5:00)<\/div><div><br><\/div><div>Primeiro capítulo: Saudação<\/div><div>Versículo 1: 1-3 Trata-se de uma saudação para os irmãos cristãos.<\/div><div><br><\/div><div>Segundo capítulo: A Gratidão de Paulo<\/div><div>Versículo 1: 4-9 Uma expressão de gratidão de Paulo a Jesus Cristo, pelos ensinamentos, pelos dons e por nos permitir dar a comunhão com o Pai através do seu sacrifício.<\/div><div>Versículo 9: Fiel é Deus, pelo qual fostes chamados para a comunhão de seu Filho Jesus Cristo, nosso Senhor.<\/div><div><br><\/div><div>Terceiro capítulo: Igreja Dividida<\/div><div>Versículo 1: 10-20<\/div><div>Paulo roga à igreja que se torne uma unidade na verdade em Cristo, visto que estavam separados em diversas certezas sobre o evangelho, que haviam se formado, tendo Paulo como batizador, Apolo e Cefas... esquecendo o evangelho de nosso Senhor Jesus Cristo. Sabendo, através da família de Cloé, que havia desentendimentos na igreja, Paulo escreve essa epístola a fim de unir a igreja novamente em uma certeza, Cristo Jesus, nosso Senhor e Salvador.<\/div><div>Nesse capítulo, Paulo direciona a fé para Cristo Jesus, o Senhor que nos torna um aos olhos do Pai.<\/div><div><br><\/div><div>Quarto capítulo: Aqueles a quem Deus Chama<\/div><div>Versículo 1: 21-31<\/div><div>Esse capítulo auxilia a igreja a reconhecer a Deus pela pregação, por mais louca que pareça, Cristo crucificado, o escândalo para judeus e loucura para os gregos. Ao fim do capítulo, fica claro que Paulo está pedindo para a igreja glorificar o Senhor e somente ao Senhor.<\/div><div>Versículo 25: Porque a loucura de Deus é mais sábia do que os homens, e a fraqueza de Deus é mais forte do que os homens.<\/div><div>Versículo 27: Mas Deus escolheu as coisas loucas deste mundo para confundir as sábias, e Deus escolheu as coisas fracas para confundir as fortes.<\/div>"};
+function mig5(){if(S.seed4)return;S.seed4=1;S.est.push({id:'e'+Date.now(),title:SEEDE.title,date:SEEDE.date,html:SEEDE.html})}
 function load(){
- for(const k of [K,B]){try{const j=JSON.parse(localStorage.getItem(k));if(j&&j.days&&j.presets){S=j;mig();mig2();mig3();mig4();return}}catch(e){}}
+ for(const k of [K,B]){try{const j=JSON.parse(localStorage.getItem(k));if(j&&j.days&&j.presets){S=j;mig();mig2();mig3();mig4();mig5();return}}catch(e){}}
  S={presets:{},days:{},logs:{}};
- mig();mig2();mig3();mig4();
+ mig();mig2();mig3();mig4();mig5();
 }
 function save(){const j=JSON.stringify(S);try{localStorage.setItem(K,j);localStorage.setItem(B,j)}catch(e){}}
 const mkw=tr=>({name:tr.name,ex:tr.ex.filter(e=>e.n.trim()).map(e=>({n:e.n.trim(),s:e.s,r:e.r,c:e.c,t:e.t,st:0,cf:''}))});
@@ -131,13 +162,65 @@ const ef=e=>e.cf||e.c||'';
 const exd=e=>[(e.s||e.r)?(e.s||'-')+'×'+(e.r||'-'):'',kg(ef(e)),e.t||''].filter(Boolean).join(' · ');
 const el=m=>m?(m.a||0)+(m.s?Date.now()-m.s:0):0;
 const ft=ms=>{const q=Math.floor(ms/1000);return pad(Math.floor(q/3600))+':'+pad(Math.floor(q%3600/60))+':'+pad(q%60)};
-function wl(t){if(!t.w)return '';const a=t.w.ex,o=a.filter(e=>e.st==1).length,m=t.w.tm,tl=m&&el(m)>0?'     Tempo de treino: '+ft(el(m))+(m.i?' ('+m.i+(m.o?' às '+m.o:'')+')':'')+(m.s?' (em andamento)':'')+'\n':'';
- return '     Treino: '+t.w.name+' - '+o+'/'+a.length+' exercícios concluídos\n'+tl+a.map(e=>'     ['+(e.st==1?'OK':'--')+'] '+e.n+(exd(e)?': '+exd(e):'')+(e.cf&&e.c&&e.cf!==e.c?' (preset '+kg(e.c)+')':'')).join('\n')+'\n'}
+const SEP='='.repeat(44),LN='-'.repeat(44);
+const DS=()=>key(new Date()),nowS=()=>{const n=new Date();return pad(n.getDate())+'/'+pad(n.getMonth()+1)+'/'+n.getFullYear()+' '+hm(n)};
+const slug=t=>t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\w-]+/g,'_').replace(/^_+|_+$/g,'');
+const fd=k=>k?k.split('-').reverse().join('/'):'';
+const nz=t=>t.replace(/[^\u0000-\u007f]/g,c=>c.normalize('NFD')[0]).toLowerCase();
+const pt=hh=>{const d=document.createElement('div');d.innerHTML=hh.replace(/<br\s*\/?>/gi,'\n').replace(/<\/(div|p|h\d|li)>/gi,'\n');return d.textContent.replace(/\n{3,}/g,'\n\n').trim()};
+function wl(t){
+ if(!t.w)return '';
+ const a=t.w.ex,o=a.filter(e=>e.st==1).length,m=t.w.tm;
+ let s='     Treino: '+t.w.name+' - '+o+'/'+a.length+' exercícios concluídos\n';
+ if(m&&el(m)>0)s+='     Tempo de treino: '+ft(el(m))+(m.i?' ('+m.i+(m.o?' às '+m.o:'')+')':'')+(m.s?' (em andamento)':'')+'\n';
+ a.forEach(e=>{s+='       ['+(e.st==1?'OK':e.st<0?'--':'..')+'] '+e.n+(exd(e)?': '+exd(e):'')+(e.cf&&e.c&&e.cf!==e.c?' (preset '+kg(e.c)+')':'')+(e.st==1&&e.at?' às '+e.at:'')+'\n'});
+ return s}
 function txt(k){
  const d=S.days[k],[y,m,dd]=k.split('-'),w=new Date(y,m-1,dd).getDay(),[n,o]=cnt(k);
- let s=dd+'/'+m+'/'+y+' - '+WD[w]+(d.rain?' - CHUVA':'')+'\nConcluídas: '+o+'/'+n+' ('+pct(o,n)+'%)\n\n';
- so(d).forEach(t=>{const v=stv(d,k,t);s+='['+(v==1?'OK':'--')+'] '+t.t+' '+t.x+(v==1&&t.at?' (cumprida às '+t.at+')':'')+(d.rain?' (chuva)':'')+(t.n?'\n     nota: '+t.n.replace(/\n/g,' / '):'')+'\n'+wl(t)});
- return s;
+ let s='ROTINA DO DIA - '+dd+'/'+m+'/'+y+' ('+WD[w]+')'+(d.rain?' - CHUVA':'')+'\nConcluídas: '+o+'/'+n+' ('+pct(o,n)+'%)'+(d.closed?'':' - dia em andamento')+'\n'+LN+'\n';
+ so(d).forEach(t=>{const v=stv(d,k,t);
+  s+='\n['+(v==1?'OK':v<0?'--':'..')+'] '+t.t+' - '+t.x+(v==1&&t.at?' (cumprida às '+t.at+')':v<0?' (não cumprida)':' (pendente)')+(d.rain?' (chuva)':'')+'\n';
+  if(t.n)s+='     Nota: '+t.n.replace(/\n/g,'\n           ')+'\n';
+  s+=wl(t)});
+ return s}
+function txHist(){
+ const ks=Object.keys(S.days).sort();let T=0,O=0;
+ const rows=ks.map(k=>{const [n,o]=cnt(k),[y,m,dd]=k.split('-');T+=n;O+=o;return dd+'/'+m+'/'+y+' '+AB[new Date(y,m-1,dd).getDay()]+' - '+o+'/'+n+' ('+pct(o,n)+'%)'+(S.days[k].rain?' chuva':'')});
+ return 'ROTINA - HISTÓRICO COMPLETO\nGerado em '+nowS()+'\nRotina assertiva: '+pct(O,T)+'% ('+O+'/'+T+' tarefas)\n\nRESUMO\n'+rows.join('\n')+'\n\n'+ks.map(k=>SEP+'\n'+txt(k)).join('\n')}
+function txPres(){
+ let s='ROTINA - LISTA PADRÃO DA SEMANA\nGerado em '+nowS()+'\n';
+ [1,2,3,4,5,6,0].forEach(i=>{
+  s+='\n'+SEP+'\n'+WD[i].toUpperCase()+'\n'+LN+'\n';
+  const a=(S.presets[i]||[]).slice().sort((p,q)=>p.t<q.t?-1:p.t>q.t?1:0);
+  if(!a.length)s+='(sem tarefas)\n';
+  a.forEach(p=>{s+=p.t+' - '+p.x+'\n';const tr=p.tr&&S.trn.find(z=>z.id==p.tr);
+   if(tr){s+='     Treino: '+tr.name+'\n';tr.ex.forEach(e=>{s+='       - '+e.n+(exd(e)?': '+exd(e):'')+'\n'})}})});
+ return s}
+function txTrn(){
+ let s='TREINOS - PADRÃO (PRESETS)\nGerado em '+nowS()+'\n';
+ S.trn.forEach(tr=>{s+='\n'+SEP+'\n'+(tr.name||'Treino sem nome')+'\n'+LN+'\n';
+  tr.ex.forEach((e,i)=>{s+=(i+1)+'. '+e.n+(e.s||e.r?' | '+(e.s||'-')+' séries x '+(e.r||'-')+' repetições':'')+(e.c?' | carga: '+kg(e.c):'')+(e.t?' | tempo: '+e.t:'')+'\n'})});
+ return s}
+function txEst(){
+ const a=S.est.slice().sort((x,y)=>x.date<y.date?-1:x.date>y.date?1:(x.id<y.id?-1:1));
+ return 'ESTUDOS BÍBLICOS\nGerado em '+nowS()+'\nTotal: '+a.length+' estudo(s)\n\n'+a.map(e=>SEP+'\n'+fd(e.date)+' - '+(e.title||'Sem título')+'\n'+LN+'\n'+pt(e.html||'')+'\n').join('\n')}
+function txCif(){
+ const a=S.cifras.slice().sort((x,y)=>cmp(x.title,y.title));
+ return 'CIFRAS DE VIOLÃO\nGerado em '+nowS()+'\nTotal: '+a.length+' cifra(s)\n\nÍNDICE\n'+a.map(c=>'- '+c.title+(c.artist?' ('+c.artist+')':'')+(c.genre?' ['+c.genre+']':'')).join('\n')+'\n\n'+a.map(c=>SEP+'\n'+c.title+(c.artist?' - '+c.artist:'')+(c.genre?'\nGênero: '+c.genre:'')+'\n'+LN+'\n'+c.text.trim()+'\n').join('\n')}
+const EXP=[
+ ['Rotina de hoje',()=>'Rotina_Dia_'+DS()+'_'+slug(WD[new Date().getDay()]),()=>txt(DS())],
+ ['Histórico da rotina',()=>'Rotina_Historico_'+DS(),txHist],
+ ['Lista padrão da rotina',()=>'Rotina_Lista_Padrao_'+DS(),txPres],
+ ['Treinos',()=>'Treinos_Padrao_'+DS(),txTrn],
+ ['Estudos bíblicos',()=>'Estudos_Biblicos_'+DS(),txEst],
+ ['Cifras',()=>'Cifras_Violao_'+DS(),txCif]];
+function expo(){
+ const ov=h('div','ov'),bx=h('div','bx'),on=EXP.map(()=>1);
+ const L=EXP.map((x,i)=>{const r=h('div','xo on',null,h('span',null,x[0]));r.onclick=()=>{on[i]=on[i]?0:1;r.classList.toggle('on',!!on[i])};return r});
+ const ok=h('button','bk','Baixar');
+ ok.onclick=()=>{ov.remove();EXP.forEach((x,i)=>{if(on[i])setTimeout(()=>dl(x[1]()+'.txt',x[2]()),i*600)})};
+ ov.onpointerdown=e=>{if(e.target==ov)ov.remove()};
+ bx.append(...L,ok);ov.append(bx);document.body.append(ov);
 }
 function roll(){
  const today=key(new Date());let ch=!S.days[today];
@@ -148,58 +231,90 @@ function dl(name,text){const a=document.createElement('a');a.href=URL.createObje
 
 function bind(el,onTap,onSwipe){
  let x0=0,dx=0,id=null,mv=false;
- el.onpointerdown=e=>{x0=e.clientX;dx=0;id=e.pointerId;mv=false;el.style.transition='none'};
- el.onpointermove=e=>{if(id!==e.pointerId)return;dx=e.clientX-x0;if(Math.abs(dx)>10)mv=true;if(mv)el.style.transform='translateX('+dx*.6+'px)'};
- const end=e=>{if(id!==e.pointerId)return;id=null;el.style.transition='transform .2s';el.style.transform='';
+ el.onpointerdown=e=>{e.stopPropagation();x0=e.clientX;dx=0;id=e.pointerId;mv=false;el.style.transition='none'};
+ el.onpointermove=e=>{e.stopPropagation();if(id!==e.pointerId)return;dx=e.clientX-x0;if(Math.abs(dx)>10)mv=true;if(mv)el.style.transform='translateX('+dx*.6+'px)'};
+ const end=e=>{e.stopPropagation();if(id!==e.pointerId)return;id=null;el.style.transition='transform .2s';el.style.transform='';
   if(e.type=='pointercancel')return;if(Math.abs(dx)>70)onSwipe(dx>0?1:-1);else if(!mv)onTap()};
  el.onpointerup=end;el.onpointercancel=end;
 }
 
 function rowEl(k,d,t,cb,live){
  const v=stv(d,k,t),r=h('div','row'+(v==1?' ok':v<0?' no':'')),ds=h('div','ds',null,h('span',null,t.x));
- const tm=h('div','tm',t.t);r.append(tm,ds);
- if(!live){if(t.n)ds.firstChild.append(h('span','nn',t.n));return r}
  if(t.n)ds.append(h('span','nt','✎'));
- bind(r,()=>bubble(k,t,false,cb),dir=>{t.s=t.s===dir?(dir<0&&d.closed?-1:0):dir;if(t.s==1)t.at=hm(new Date())+':'+pad(new Date().getSeconds());else delete t.at;d.touched=1;cb()});
+ r.append(h('div','tm',t.t),ds);
+ if(live)bind(r,()=>bubble(k,t,false,cb),dir=>{t.s=t.s===dir?(dir<0&&d.closed?-1:0):dir;if(t.s==1)t.at=hm(new Date())+':'+pad(new Date().getSeconds());else delete t.at;d.touched=1;cb()});
+ else r.onclick=()=>bubble(k,t,false,cb,true);
  return r;
 }
+function tmBox(d,t,cb,live){
+ const w=t.w,m=w.tm;
+ if(!live){if(!m||!el(m))return null;return h('div','tl',null,h('span','tmv',ft(el(m))),h('span','nt',m.i?m.i+(m.o?'–'+m.o:''):''))}
+ const mm=w.tm=m||{a:0,s:0,f:0},sg=mm.f?'f':mm.s?'r':mm.p?'d':mm.a>0?'p':'i';
+ const v=h('span','tmv',ft(el(mm)));v._w=w;if(sg=='r'||sg=='f')v.style.color='#6ea8ff';
+ const b=(p,f,c)=>{const x=h('button','tb2');x.innerHTML=ic(p);if(c)x.style.color=c;x.onpointerdown=x.onpointerup=ev=>ev.stopPropagation();x.onclick=ev=>{ev.stopPropagation();f()};return x};
+ const go=()=>{mm.s=Date.now();mm.p=0;mm.f=0;mm.o='';if(!mm.i)mm.i=hm(new Date());d.touched=1;cb()};
+ const rst=()=>{if(confirm('Zerar o tempo?')){w.tm={a:0,s:0,f:0};cb()}};
+ const A={
+  i:()=>[b(P.play,go)],
+  r:()=>[b(P.pause,()=>{mm.a+=Date.now()-mm.s;mm.s=0;cb()},'#6ea8ff')],
+  p:()=>[b(P.stop,()=>{mm.p=1;cb()})],
+  d:()=>[b(P.play,go),b(P.check,()=>{mm.p=0;mm.f=1;mm.o=hm(new Date());cb()}),b(P.reset,rst)],
+  f:()=>[b(P.reset,rst)]};
+ return h('div','tl',null,v,h('div','tg',null,...A[sg]()))}
+function xlist(d,t,cb,live){
+ const L=h('div','xl');
+ t.w.ex.forEach(e=>{
+  const x=h('div','xe'+(e.st==1?' ok':e.st<0?' no':''),null,h('span',null,e.n),h('span','nt',exd(e)));
+  if(live)bind(x,()=>cargaB(e,cb),dir=>{e.st=e.st===dir?0:dir;if(e.st==1)e.at=hm(new Date());else delete e.at;d.touched=1;cb()});
+  L.append(x)});
+ return L}
 function addRow(k,cb){const a=h('div','row add',null,h('div','tm','+'),h('div','ds','Adicionar'));a.onclick=()=>bubble(k,{t:hm(new Date()),x:'',n:'',s:0},true,cb);return a}
 
 R.main=()=>{
  const k=key(new Date()),d=ens(),n=new Date(),s=$('main');s.textContent='';
  const rb=ib(P.drop,()=>{d.rain=d.rain?0:1;save();R.main()});rb.classList.toggle('on',!!d.rain);
- const sv=ib(P.save,()=>{save();dl('rotina_'+k+'.txt',txt(k));sv.classList.add('on');setTimeout(()=>sv.classList.remove('on'),1200)});
+ const sv=ib(P.save,()=>{save();expo()});
  const fb=h('button','ib tx','Aa');fb.onclick=()=>{S.font=((S.font||0)+1)%F.length;save();af()};
- s.append(top(h('div',null,null,ib(P.rep,()=>nav('report')),ib(P.music,()=>nav('cifras')),ib(P.gym,()=>{ctx=null;nav('treinos')})),fb,rb,ib(P.list,()=>nav('presets')),sv));
+ s.append(top(h('div',null,null,ib(P.rep,()=>nav('report')),ib(P.music,()=>nav('cifras')),ib(P.gym,()=>{ctx=null;nav('treinos')}),ib(P.bib,()=>nav('estudos'))),fb,rb,ib(P.list,()=>nav('presets')),sv));
  const dt=h('div','date',WD[n.getDay()]+', '+n.getDate()+' de '+MS[n.getMonth()]+' de '+n.getFullYear());
  if(d.rain)dt.insertAdjacentHTML('beforeend',ic(P.drop));
  const L=h('div','list');
  const cb=()=>{save();R.main()};
- so(d).forEach(t=>{L.append(rowEl(k,d,t,cb,1));exRows(k,d,t,cb,1).forEach(x=>L.append(x))});
+ so(d).forEach(t=>L.append(rowEl(k,d,t,cb,1)));
  L.append(addRow(k,cb));s.append(dt,L);
 };
 
-function bubble(k,t,isNew,cb){
+function bubble(k,t,isNew,cb,ro){
  const d=S.days[k],ov=h('div','ov'),bx=h('div','bx');
  const tm=h('input','bt');tm.type='time';tm.value=t.t;
- const nm=h('input','bn');nm.value=t.x;nm.placeholder='Tarefa';
+ const nm=h('textarea','bn tt');nm.rows=1;nm.value=t.x;nm.placeholder='Tarefa';
  const nt=h('textarea');nt.value=t.n||'';nt.rows=5;
+ if(ro){tm.disabled=true;nm.readOnly=true;nt.readOnly=true}
  const fin=()=>{
+  if(ro){ov.remove();return}
   if(isNew){if(nm.value.trim()){t.t=tm.value||t.t;t.x=nm.value.trim();t.n=nt.value.trim();d.tasks.push(t);d.touched=1}}
   else{t.t=tm.value||t.t;if(nm.value.trim())t.x=nm.value.trim();t.n=nt.value.trim();d.touched=1}
   ov.remove();cb();
  };
  const x=h('button','bd','×');
  x.onclick=()=>{if(isNew){ov.remove();return}if(confirm('Excluir tarefa?')){d.tasks=d.tasks.filter(a=>a!==t);d.touched=1;ov.remove();cb()}};
- const ok=h('button','bk','Concluir');ok.onclick=fin;
+ const ok=h('button','bk',ro?'Fechar':'Concluir');ok.onclick=fin;
  ov.onpointerdown=e=>{if(e.target==ov)fin()};
  const mus=h('button','mi');mus.innerHTML=ic(P.music);
  const gy=h('button','mi');gy.innerHTML=ic(P.gym);
  const sm=()=>{mus.style.display=/viol[aã]o/i.test(nm.value)?'flex':'none';gy.style.display=/muscula[cç][aã]o/i.test(nm.value)?'flex':'none'};sm();nm.addEventListener('input',sm);
  mus.onclick=()=>{fin();nav('cifras')};
  gy.onclick=()=>{fin();ctx={k,t,cb};nav('treinos')};
- bx.append(h('div','bh',null,h('div','bg',null,tm,mus,gy),x),nm,nt,ok);ov.append(bx);document.body.append(ov);
- (isNew?nm:nt).focus();
+ const wb=h('div','wb');
+ const rw=()=>{wb.textContent='';const a=tmBox(d,t,cbp,!ro);if(a)wb.append(a);wb.append(xlist(d,t,cbp,!ro))};
+ const cbp=()=>{if(!ro)save();rw()};
+ if(t.w)rw();
+ bx.append(h('div','bh',null,h('div','bg',null,tm,ro?null:mus,ro?null:gy),ro?null:x),nm,t.w?wb:null,nt,ok);ov.append(bx);document.body.append(ov);
+ const gr=a=>{a.style.height='auto';a.style.height=a.scrollHeight+'px'};
+ nm.addEventListener('keydown',e=>{if(e.key==='Enter')e.preventDefault()});
+ nm.addEventListener('input',()=>{if(/\n/.test(nm.value))nm.value=nm.value.replace(/\s*\n\s*/g,' ');gr(nm)});
+ nt.addEventListener('input',()=>gr(nt));
+ gr(nm);gr(nt);if(!ro&&!t.w)(isNew?nm:nt).focus();
 }
 
 R.presets=()=>{
@@ -231,7 +346,7 @@ R.report=()=>{
   r.onclick=()=>{dk=k;ed=0;nav('detail')};L.append(r);
  });
  const p=pct(O,T),b=h('div','pb');b.style.setProperty('--p',p+'%');
- s.append(top(ib(P.back,()=>history.back()),ib(P.save,()=>dl('rotina_completo.txt',ks.map(k=>S.logs[k]||txt(k)).join('\n')))),
+ s.append(top(ib(P.back,()=>history.back()),ib(P.save,()=>dl('Rotina_Historico_'+DS()+'.txt',txHist()))),
   h('div','rt',null,h('span',null,'Rotina assertiva'),h('b',null,p+'%'),b),L);
  L.scrollTop=L.scrollHeight;
 };
@@ -244,10 +359,10 @@ R.detail=()=>{
  const eb=ib(P.edit,()=>{ed=!ed;R.detail()});eb.classList.toggle('on',!!ed);
  let rb=null;if(ed){rb=ib(P.drop,()=>{d.rain=d.rain?0:1;cb()});rb.classList.toggle('on',!!d.rain)}
  const xb=ib(P.trash,()=>{if(confirm('Excluir este dia do histórico?')){delete S.days[k];delete S.logs[k];save();history.back()}});
- s.append(top(ib(P.back,()=>history.back()),eb,rb,xb,ib(P.save,()=>dl('rotina_'+k+'.txt',S.logs[k]||txt(k)))));
+ s.append(top(ib(P.back,()=>history.back()),eb,rb,xb,ib(P.save,()=>dl('Rotina_Dia_'+k+'_'+slug(WD[w])+'.txt',txt(k)))));
  const dt=h('div','date',WD[w]+', '+(+dd)+' de '+MS[m-1]+' de '+y);if(d.rain)dt.insertAdjacentHTML('beforeend',ic(P.drop));
  const L=h('div','list');
- so(d).forEach(t=>{L.append(rowEl(k,d,t,cb,ed));exRows(k,d,t,cb,ed).forEach(x=>L.append(x))});
+ so(d).forEach(t=>L.append(rowEl(k,d,t,cb,ed)));
  if(ed)L.append(addRow(k,cb));
  s.append(dt,L);
 };
@@ -350,25 +465,6 @@ R.player=()=>{
  stopP=()=>{cancelAnimationFrame(raf);try{wl&&wl.release()}catch(e){}};
 };
 
-function tmRow(d,t,cb,live){
- const w=t.w,m=w.tm;
- if(!live){if(!m||!el(m))return null;return h('div','row sx',null,h('div','ds',null,h('span','tmv',ft(el(m))),h('span','nt',m.i?m.i+(m.o?'–'+m.o:''):'')))}
- const mm=w.tm=m||{a:0,s:0,f:0},v=h('span','tmv',ft(el(mm)));v._w=w;
- if(mm.s)v.style.color='#6ea8ff';
- const b=(p,on,f)=>{const x=h('button','ib sm');x.innerHTML=ic(p);x.disabled=!on;x.onclick=f;return x};
- const stp=()=>{if(mm.s){mm.a+=Date.now()-mm.s;mm.s=0}};
- return h('div','row sx',null,h('div','ds',null,v,h('div',null,null,
-  b(P.play,!mm.s,()=>{mm.s=Date.now();if(!mm.i)mm.i=hm(new Date());mm.f=0;mm.o='';d.touched=1;cb()}),
-  b(P.pause,!!mm.s,()=>{stp();cb()}),
-  b(P.stop,!!mm.s||(mm.a>0&&!mm.f),()=>{stp();if(mm.a>0){mm.f=1;mm.o=hm(new Date())}cb()}))))}
-function exRows(k,d,t,cb,live){
- if(!t.w)return [];
- const a=[],tr=tmRow(d,t,cb,live);if(tr)a.push(tr);
- t.w.ex.forEach(e=>{
-  const r=h('div','row sx'+(e.st==1?' ok':e.st<0?' no':''),null,h('div','ds',null,h('span',null,e.n),h('span','nt',exd(e))));
-  if(live)bind(r,()=>cargaB(e,cb),dir=>{e.st=e.st===dir?0:dir;if(e.st==1)e.at=hm(new Date());else delete e.at;d.touched=1;cb()});
-  a.push(r)});
- return a}
 function cargaB(e,cb){
  const ov=h('div','ov'),bx=h('div','bx'),i=h('input','bn');
  i.value=e.cf||e.c||'';i.placeholder='Carga (kg)';i.inputMode='decimal';
@@ -411,10 +507,68 @@ R.treino=()=>{
  L.append(ad);s.append(L);
 };
 
+R.estudos=()=>{
+ const s=$('estudos');s.textContent='';
+ const L=h('div','list');
+ const fill=()=>{
+  L.textContent='';const q=eq.trim(),nq=nz(q);
+  S.est.slice().sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:(a.id<b.id?1:-1)).forEach(e=>{
+   const body=pt(e.html||'').replace(/\s*\n\s*/g,' '),i=nq?nz(body).indexOf(nq):-1;
+   if(nq&&i<0&&!nz(e.title||'').includes(nq))return;
+   const ds=h('div','ds col',null,h('div','th',null,h('span',null,e.title||'Sem título'),h('span','nt',fd(e.date))));
+   if(i>=0){const a=Math.max(0,i-28),b=Math.min(body.length,i+nq.length+56);
+    ds.append(h('div','ex2',null,(a?'…':'')+body.slice(a,i),h('b',null,body.slice(i,i+nq.length)),body.slice(i+nq.length,b)+(b<body.length?'…':'')))}
+   const r=h('div','row',null,ds);r.onclick=()=>{eid=e.id;nav('estudo')};L.append(r)});
+  if(!L.firstChild)L.append(h('div','gh',nq?'Nenhum resultado':'Nenhum estudo'))};
+ s.append(top(ib(P.back,()=>history.back()),ib(P.search,()=>{es=!es;if(!es)eq='';R.estudos()}),
+  ib(P.plus,()=>{const e={id:Date.now()+'',title:'',date:key(new Date()),html:''};S.est.push(e);save();eid=e.id;nav('estudo')})));
+ const si=h('input');si.placeholder='Buscar';si.value=eq;si.oninput=()=>{eq=si.value;fill()};
+ if(es)s.append(h('div','sbar',null,si));
+ s.append(L);fill();if(es&&!eq)si.focus();
+};
+R.estudo=()=>{
+ const s=$('estudo'),e=S.est.find(z=>z.id==eid);s.textContent='';
+ if(!e){history.back();return}
+ const ed=h('div','ed');ed.contentEditable='true';ed.setAttribute('data-ph','Escreva aqui');ed.innerHTML=e.html||'';
+ let et=0,lv=3,cc=0,op=0;
+ const fl=()=>{clearTimeout(et);e.html=ed.innerHTML;save()},sv=()=>{clearTimeout(et);et=setTimeout(fl,600)};
+ flushE=fl;
+ ed.addEventListener('input',()=>{if(ed.innerHTML==='<br>')ed.innerHTML='';sv()});
+ ed.addEventListener('paste',ev=>{ev.preventDefault();document.execCommand('insertText',false,(ev.clipboardData||window.clipboardData).getData('text/plain'))});
+ const ti=h('input','bn tn');ti.value=e.title;ti.placeholder='Título';ti.oninput=()=>{e.title=ti.value;sv()};
+ const di=h('input','dtp');di.type='date';di.value=e.date;di.onchange=()=>{if(di.value){e.date=di.value;fl()}};
+ const cal=ib(P.cal,()=>{try{di.showPicker()}catch(_){di.focus();di.click()}});
+ const nm=v=>String(v||'').replace(/\s+/g,'');
+ const CL=['rgb(207,207,207)','rgb(110,168,255)','rgb(255,107,107)','rgb(0,0,0)'];
+ const HY='rgba(255,214,0,0.38)',HB='rgba(80,150,255,0.42)';
+ const tog=(c,v)=>{ed.focus();document.execCommand('styleWithCSS',false,true);document.execCommand(c,false,nm(document.queryCommandValue(c))==nm(v)?'transparent':v);sv()};
+ const sz=d=>{ed.focus();lv=Math.max(1,Math.min(7,lv+d));document.execCommand('styleWithCSS',false,false);document.execCommand('fontSize',false,String(lv));sv()};
+ const bt=(c,f)=>{const b=h('button','tbn');b.append(c);b.onmousedown=ev=>ev.preventDefault();b.onclick=f;return b};
+ const L=(t,css)=>{const x=h('span',null,t);Object.assign(x.style,css);return x};
+ const I=p=>{const x=h('span','tbi');x.innerHTML=ic(p);return x};
+ const sph=(c,f)=>{const i=h('span','sph');i.style.background=c;return bt(i,f)};
+ const cw=h('div','cw');
+ const rc=()=>{cw.textContent='';cw.append(sph(CL[cc],()=>{op=!op;rc()}));
+  if(op)CL.forEach((c,i)=>{if(i!=cc)cw.append(sph(c,()=>{cc=i;op=0;ed.focus();document.execCommand('styleWithCSS',false,true);document.execCommand('foreColor',false,c);sv();rc()}))})};
+ rc();
+ const sync=()=>{const sl=getSelection();let n=sl&&sl.anchorNode;if(n&&n.nodeType==3)n=n.parentNode;
+  const f=n&&n.closest&&ed.contains(n)?n.closest('font[size]'):null;lv=f?+f.getAttribute('size'):3;
+  const i=CL.findIndex(c=>nm(c)==nm(document.queryCommandValue('foreColor')));if(i>=0&&i!=cc){cc=i;rc()}};
+ ed.addEventListener('keyup',sync);ed.addEventListener('click',sync);ed.addEventListener('touchend',()=>setTimeout(sync,60));
+ const tb=h('div','etb',null,
+  bt(L('A',{background:HY,padding:'0 5px'}),()=>tog('backColor',HY)),
+  bt(L('A',{background:HB,padding:'0 5px'}),()=>tog('backColor',HB)),h('i','sep'),
+  cw,h('i','sep'),
+  bt(I(P.plus),()=>sz(1)),bt(I(P.minus),()=>sz(-1)));
+ const x=ib(P.trash,()=>{if(confirm('Excluir estudo?')){S.est=S.est.filter(z=>z!==e);save();flushE=()=>{};history.back()}});
+ s.append(top(ib(P.back,()=>history.back()),cal,x),h('div','eh',null,ti),tb,ed,di);
+ if(!e.title&&!e.html)ti.focus();
+};
+
 function show(n){document.querySelectorAll('.scr').forEach(e=>e.classList.toggle('on',e.id==n));R[n]()}
 function nav(n){stack.push(n);history.pushState(0,'');show(n)}
 function back(){
- const p=stack.length>1?stack.pop():null;if(p=='player')stopP();
+ const p=stack.length>1?stack.pop():null;if(p=='player')stopP();if(p=='estudo')flushE();if(p=='estudos'){es=0;eq=''}
  if(p=='presets'){
   for(const i in S.presets)S.presets[i]=S.presets[i].filter(z=>z.x.trim());
   const d=ens();if(!d.touched&&!d.closed)d.tasks=S.presets[new Date().getDay()].map(mk);save();
@@ -427,7 +581,7 @@ function tick(){roll();if(stack[stack.length-1]=='main'&&!document.querySelector
 load();af();roll();history.replaceState(0,'');show('main');
 if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register('sw.js');
 addEventListener('popstate',()=>{let q=popN||1;popN=0;while(q--)back();if(after){const f=after;after=null;f()}});
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)tick()});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)tick();else flushE()});addEventListener('pagehide',()=>flushE());
 setInterval(tick,30000);setInterval(()=>document.querySelectorAll('.tmv').forEach(e=>{if(e._w&&e._w.tm)e.textContent=ft(el(e._w.tm))}),1000);
 })();
 </script></body></html>
